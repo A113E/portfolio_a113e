@@ -1,0 +1,1 @@
+# Colección de trabajos en el ámbito del desarrollo en Odoo
