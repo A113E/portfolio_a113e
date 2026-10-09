@@ -1,0 +1,156 @@
+---
+import CVLayout from '../../layouts/CVLayout.astro';
+import Icon from '../../components/Icon.astro';
+import {
+  perfil,
+  trayectoria,
+  asignaturas,
+  posgrado,
+  formacion,
+  certificaciones,
+  softSkills,
+  idiomas,
+} from '../../data/profesor';
+
+const contacto = [
+  { icono: 'email', valor: perfil.email },
+  { icono: 'telefono', valor: perfil.telefono },
+  { icono: 'ubicacion', valor: perfil.ubicacion },
+  { icono: 'linkedin', valor: perfil.linkedin },
+  { icono: 'github', valor: perfil.github },
+];
+
+// Agrupar asignaturas por institución para el listado compacto
+const asignaturasPorInstitucion = asignaturas.reduce((acc, a) => {
+  if (!acc[a.institucion]) acc[a.institucion] = [];
+  acc[a.institucion].push(a.nombre);
+  return acc;
+}, {} as Record<string, string[]>);
+---
+
+<CVLayout title="CV — Alberto Adrián Mártir González · Docencia">
+  <!-- ============ CABECERA ============ -->
+  <header class="cv-header">
+    <div class="cv-photo">
+      <img src="/img/albe.png" alt="Foto de perfil de Alberto M." />
+    </div>
+    <div class="cv-header-main">
+      <h1 class="cv-name">{perfil.nombre}</h1>
+      <p class="cv-title">{perfil.titular}</p>
+    </div>
+    <ul class="cv-contact">
+      {contacto.map((c) => (
+        <li>
+          <Icon name={c.icono} size={14} stroke={1.8} />
+          <span>{c.valor}</span>
+        </li>
+      ))}
+    </ul>
+  </header>
+
+  <!-- ============ PERFIL ============ -->
+  <section class="cv-section">
+    <h2 class="cv-section-title">Perfil docente</h2>
+    <p class="cv-summary">{perfil.resumen}</p>
+  </section>
+
+  <!-- ============ EXPERIENCIA DOCENTE ============ -->
+  <section class="cv-section">
+    <h2 class="cv-section-title">Experiencia docente</h2>
+    {trayectoria.map((t) => (
+      <article class="cv-job">
+        <header class="cv-job-head">
+          <div>
+            <h3 class="cv-job-cargo">{t.cargo}</h3>
+            <p class="cv-job-inst">{t.institucion} · {t.ubicacion}</p>
+          </div>
+          <span class="cv-job-periodo">{t.periodo}</span>
+        </header>
+        <ul class="cv-job-funciones">
+          {t.funciones.map((f) => <li>{f}</li>)}
+        </ul>
+        {t.logros.length > 0 && (
+          <ul class="cv-job-logros">
+            {t.logros.map((l) => <li>{l}</li>)}
+          </ul>
+        )}
+      </article>
+    ))}
+  </section>
+
+  <!-- ============ ASIGNATURAS ============ -->
+  <section class="cv-section">
+    <h2 class="cv-section-title">Asignaturas impartidas</h2>
+    <div class="cv-skills-grid">
+      {Object.entries(asignaturasPorInstitucion).map(([institucion, items]) => (
+        <div class="cv-skill-group">
+          <h3 class="cv-skill-cat">{institucion}</h3>
+          <p class="cv-skill-list">{items.join(' · ')}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ============ POSGRADO ============ -->
+  <section class="cv-section">
+    <h2 class="cv-section-title">Posgrado</h2>
+    <article class="cv-edu">
+      <header class="cv-edu-head">
+        <div>
+          <h3 class="cv-edu-titulo">{posgrado.titulo}</h3>
+          <p class="cv-edu-inst">{posgrado.institucion} · {posgrado.rol}</p>
+        </div>
+        <span class="cv-edu-periodo">{posgrado.periodo}</span>
+      </header>
+      <p class="cv-edu-destacado">Vinculado al {posgrado.proyecto}</p>
+    </article>
+  </section>
+
+  <!-- ============ FORMACIÓN ============ -->
+  <section class="cv-section">
+    <h2 class="cv-section-title">Formación</h2>
+    <div class="cv-edu-block">
+      {formacion.map((f) => (
+        <article class="cv-edu">
+          <header class="cv-edu-head">
+            <div>
+              <h3 class="cv-edu-titulo">{f.titulo}</h3>
+              <p class="cv-edu-inst">{f.institucion}</p>
+            </div>
+            <span class="cv-edu-periodo">{f.periodo}</span>
+          </header>
+          {f.destacado && <p class="cv-edu-destacado">{f.destacado}</p>}
+        </article>
+      ))}
+    </div>
+
+    <div class="cv-cert-block">
+      <h3 class="cv-subtitle">Certificaciones y formación continua</h3>
+      <ul class="cv-cert-list">
+        {certificaciones.map((c) => (
+          <li>
+            <strong>{c.titulo}</strong> — {c.institucion} ({c.periodo}). {c.descripcion}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ IDIOMAS Y SOFT SKILLS ============ -->
+  <section class="cv-section cv-section-final">
+    <div class="cv-two-col">
+      <div>
+        <h2 class="cv-section-title">Idiomas</h2>
+        <ul class="cv-idiomas">
+          {idiomas.map((i) => (
+            <li><strong>{i.nombre}</strong> — {i.nivel} ({i.etiqueta})</li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h2 class="cv-section-title">Soft skills docentes</h2>
+        <p class="cv-soft">{softSkills.map((s) => s.nombre).join(' · ')}</p>
+      </div>
+    </div>
+  </section>
+</CVLayout>
