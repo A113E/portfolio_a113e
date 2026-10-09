@@ -1,0 +1,135 @@
+---
+import CVLayout from '../../layouts/CVLayout.astro';
+import Icon from '../../components/Icon.astro';
+import {
+  perfil,
+  trayectoria,
+  publicaciones,
+  proyectos,
+  eventos,
+  formacion,
+  certificaciones,
+  softSkills,
+  idiomas,
+} from '../../data/investigador';
+
+const contacto = [
+  { icono: 'email', valor: perfil.email },
+  { icono: 'telefono', valor: perfil.telefono },
+  { icono: 'ubicacion', valor: perfil.ubicacion },
+  { icono: 'orcid', valor: perfil.orcid },
+  { icono: 'github', valor: perfil.github },
+];
+---
+
+<CVLayout title="CV — Alberto Adrián Mártir González · Investigación">
+  <header class="cv-header">
+    <div class="cv-photo">
+      <img src="/img/albe.png" alt="Foto de perfil de Alberto M." />
+    </div>
+    <div class="cv-header-main">
+      <h1 class="cv-name">{perfil.nombre}</h1>
+      <p class="cv-title">{perfil.titular}</p>
+    </div>
+    <ul class="cv-contact">
+      {contacto.map((c) => (
+        <li>
+          <Icon name={c.icono} size={14} stroke={1.8} />
+          <span>{c.valor}</span>
+        </li>
+      ))}
+    </ul>
+  </header>
+
+  <section class="cv-section">
+    <h2 class="cv-section-title">Perfil investigador</h2>
+    <p class="cv-summary">{perfil.resumen}</p>
+  </section>
+
+  <section class="cv-section">
+    <h2 class="cv-section-title">Experiencia investigativa</h2>
+    {trayectoria.map((t) => (
+      <article class="cv-job">
+        <header class="cv-job-head">
+          <div>
+            <h3 class="cv-job-cargo">{t.cargo}</h3>
+            <p class="cv-job-inst">{t.institucion} · {t.ubicacion}</p>
+          </div>
+          <span class="cv-job-periodo">{t.periodo}</span>
+        </header>
+        <ul class="cv-job-funciones">
+          {t.funciones.map((f) => <li>{f}</li>)}
+        </ul>
+        {t.logros.length > 0 && (
+          <ul class="cv-job-logros">
+            {t.logros.map((l) => <li>{l}</li>)}
+          </ul>
+        )}
+      </article>
+    ))}
+  </section>
+
+  <section class="cv-section">
+    <h2 class="cv-section-title">Publicaciones</h2>
+    <ul class="cv-proyectos">
+      {publicaciones.map((p) => (
+        <li>
+          <strong>{p.titulo}</strong> — {p.revista} ({p.year}). <em>{p.rol}</em>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="cv-section">
+    <h2 class="cv-section-title">Proyectos I+D</h2>
+    <ul class="cv-proyectos">
+      {proyectos.map((p) => (
+        <li>
+          <strong>{p.nombre}</strong> — {p.institucion} ({p.periodo}). <em>{p.rol}</em>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="cv-section">
+    <h2 class="cv-section-title">Eventos científicos</h2>
+    <ul class="cv-proyectos">
+      {eventos.map((e) => (
+        <li><strong>{e.nombre}</strong> ({e.year}) — {e.contexto}</li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="cv-section">
+    <h2 class="cv-section-title">Formación</h2>
+    {formacion.map((f) => (
+      <article class="cv-edu">
+        <header class="cv-edu-head">
+          <div>
+            <h3 class="cv-edu-titulo">{f.titulo}</h3>
+            <p class="cv-edu-inst">{f.institucion}</p>
+          </div>
+          <span class="cv-edu-periodo">{f.periodo}</span>
+        </header>
+        {f.destacado && <p class="cv-edu-destacado">{f.destacado}</p>}
+      </article>
+    ))}
+  </section>
+
+  <section class="cv-section cv-section-final">
+    <div class="cv-two-col">
+      <div>
+        <h2 class="cv-section-title">Idiomas</h2>
+        <ul class="cv-idiomas">
+          {idiomas.map((i) => (
+            <li><strong>{i.nombre}</strong> — {i.nivel} ({i.etiqueta})</li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h2 class="cv-section-title">Soft skills</h2>
+        <p class="cv-soft">{softSkills.map((s) => s.nombre).join(' · ')}</p>
+      </div>
+    </div>
+  </section>
+</CVLayout>

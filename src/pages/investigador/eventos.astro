@@ -1,0 +1,124 @@
+---
+import MicrositeLayout from '../../layouts/MicrositeLayout.astro';
+import FloatingCV from '../../components/FloatingCV.astro';
+import { perfil, eventos } from '../../data/investigador';
+
+const navLinks = [
+  { href: '/investigador', label: 'Portada' },
+  { href: '/investigador/trayectoria', label: 'Trayectoria' },
+  { href: '/investigador/publicaciones', label: 'Publicaciones' },
+  { href: '/investigador/proyectos', label: 'Proyectos' },
+  { href: '/investigador/formacion', label: 'Formación' },
+];
+---
+
+<MicrositeLayout
+  nombre="Investigador"
+  acento="#6B2737"
+  acentoSuave="#B8860B"
+  navLinks={navLinks}
+  title="Eventos científicos — Alberto M. · Investigación"
+  description="Participación en congresos, simposios y jornadas científicas."
+>
+  <section class="page-head">
+    <div class="container">
+      <span class="head-eyebrow">Sección 04</span>
+      <h1 class="display head-title">
+        Eventos<span class="hero-dot">.</span>
+      </h1>
+      <p class="head-desc">
+        Congresos, simposios y jornadas científicas en los que he participado
+        como ponente, miembro del comité organizativo o asistente.
+      </p>
+    </div>
+  </section>
+
+  <section class="eventos-section">
+    <div class="container">
+      <ul class="eventos-grid">
+        {eventos.map((e) => (
+          <li class="evento-card">
+            <span class="evento-year">{e.year}</span>
+            <h3 class="evento-nombre">{e.nombre}</h3>
+            <p class="evento-contexto">{e.contexto}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <FloatingCV href={perfil.cv} label="Ver CV" />
+</MicrositeLayout>
+
+<style>
+  .page-head { padding: var(--space-7) 0 var(--space-5); }
+  .head-eyebrow {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--micro-acento-suave);
+    margin-bottom: var(--space-3);
+  }
+  .head-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    margin: 0 0 var(--space-3);
+    color: var(--surface-dark);
+  }
+  .hero-dot { color: var(--micro-acento-suave); }
+  .head-desc {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    max-width: 680px;
+    margin: 0;
+  }
+
+  .eventos-section { padding: var(--space-5) 0 var(--space-8); }
+  .eventos-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+  }
+  .evento-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: var(--space-4) var(--space-5);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--micro-acento-suave);
+    border-radius: var(--radius);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+  }
+  .evento-card:hover {
+    transform: translateX(4px);
+    box-shadow: var(--shadow-md);
+  }
+  .evento-year {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--micro-acento-suave);
+  }
+  .evento-nombre {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--surface-dark);
+    line-height: 1.35;
+  }
+  .evento-contexto {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  @media (max-width: 900px) {
+    .eventos-grid { grid-template-columns: 1fr; }
+  }
+</style>

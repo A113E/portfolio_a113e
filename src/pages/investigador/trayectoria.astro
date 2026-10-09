@@ -1,0 +1,236 @@
+---
+import MicrositeLayout from '../../layouts/MicrositeLayout.astro';
+import FloatingCV from '../../components/FloatingCV.astro';
+import { perfil, trayectoria } from '../../data/investigador';
+
+const navLinks = [
+  { href: '/investigador', label: 'Portada' },
+  { href: '/investigador/trayectoria', label: 'Trayectoria' },
+  { href: '/investigador/publicaciones', label: 'Publicaciones' },
+  { href: '/investigador/proyectos', label: 'Proyectos' },
+  { href: '/investigador/formacion', label: 'Formación' },
+];
+---
+
+<MicrositeLayout
+  nombre="Investigador"
+  acento="#6B2737"
+  acentoSuave="#B8860B"
+  navLinks={navLinks}
+  title="Trayectoria investigativa — Alberto M."
+  description="Labor investigativa, asesoría metodológica y apoyo a la producción científica."
+>
+  <section class="page-head">
+    <div class="container">
+      <span class="head-eyebrow">Sección 01</span>
+      <h1 class="display head-title">
+        Trayectoria<span class="hero-dot">.</span>
+      </h1>
+      <p class="head-desc">
+        Labor investigativa desarrollada en la Universidad de Ciencias Médicas
+        "Salvador Allende": servicio de búsqueda bibliográfica, asesoría
+        metodológica, talleres, apoyo a la docencia y organización de eventos
+        científicos.
+      </p>
+    </div>
+  </section>
+
+  <section class="fichas-section">
+    <div class="container">
+      <ol class="fichas">
+        {trayectoria.map((t) => (
+          <li class="ficha-item">
+            <div class="ficha-lomo" aria-hidden="true">
+              <span class="lomo-numeral">{t.numeral}</span>
+              <span class="lomo-line"></span>
+            </div>
+            <article class="ficha-card">
+              <header class="ficha-head">
+                <div class="ficha-logo">
+                  <img src={t.logo} alt={`Logo de ${t.institucion}`} />
+                </div>
+                <div class="ficha-head-info">
+                  <h2 class="ficha-cargo display">{t.cargo}</h2>
+                  <p class="ficha-institucion">{t.institucion} · {t.ubicacion}</p>
+                  <span class="ficha-periodo">{t.periodo}</span>
+                </div>
+              </header>
+
+              <div class="ficha-block">
+                <h3 class="block-title">Funciones investigativas</h3>
+                <ol class="funciones">
+                  {t.funciones.map((f) => <li>{f}</li>)}
+                </ol>
+              </div>
+
+              <div class="ficha-block">
+                <h3 class="block-title block-title-accent">Logros</h3>
+                <ul class="logros">
+                  {t.logros.map((l) => <li>{l}</li>)}
+                </ul>
+              </div>
+
+              <div class="ficha-block">
+                <h3 class="block-title">Herramientas</h3>
+                <ul class="herramientas">
+                  {t.herramientas.map((h) => <li>{h}</li>)}
+                </ul>
+              </div>
+            </article>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <FloatingCV href={perfil.cv} label="Ver CV" />
+</MicrositeLayout>
+
+<style>
+  .page-head { padding: var(--space-7) 0 var(--space-5); }
+  .head-eyebrow {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--micro-acento-suave);
+    margin-bottom: var(--space-3);
+  }
+  .head-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    margin: 0 0 var(--space-3);
+    color: var(--surface-dark);
+  }
+  .hero-dot { color: var(--micro-acento-suave); }
+  .head-desc {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    max-width: 720px;
+    margin: 0;
+  }
+
+  .fichas-section { padding: var(--space-5) 0 var(--space-8); }
+  .fichas {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+  .ficha-item { display: grid; grid-template-columns: 60px 1fr; gap: var(--space-5); }
+  .ficha-lomo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: var(--space-4);
+  }
+  .lomo-numeral {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--micro-acento-suave);
+    margin-bottom: var(--space-3);
+  }
+  .lomo-line {
+    flex-grow: 1;
+    width: 2px;
+    background: linear-gradient(180deg, var(--micro-acento), transparent);
+    opacity: 0.4;
+    border-radius: 2px;
+  }
+  .ficha-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+  .ficha-head {
+    display: grid;
+    grid-template-columns: 84px 1fr;
+    gap: var(--space-4);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px dashed var(--border);
+  }
+  .ficha-logo {
+    width: 84px;
+    height: 84px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px;
+  }
+  .ficha-logo img { width: 100%; height: 100%; object-fit: contain; }
+  .ficha-cargo { font-size: 1.4rem; margin: 0 0 4px; color: var(--surface-dark); }
+  .ficha-institucion { font-size: 0.95rem; color: var(--micro-acento); font-weight: 600; margin: 0 0 4px; }
+  .ficha-periodo { font-size: 0.85rem; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+
+  .ficha-block { display: flex; flex-direction: column; gap: var(--space-3); }
+  .block-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--micro-acento);
+    margin: 0;
+  }
+  .block-title-accent { color: var(--micro-acento-suave); }
+  .funciones {
+    list-style: none;
+    counter-reset: fn;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .funciones li {
+    counter-increment: fn;
+    position: relative;
+    padding-left: 40px;
+    font-size: 0.96rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+  .funciones li::before {
+    content: counter(fn, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 2px;
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--micro-acento-suave);
+    background: rgba(184, 134, 11, 0.12);
+    padding: 2px 7px;
+    border-radius: 4px;
+  }
+  .logros { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-2); }
+  .logros li { display: flex; gap: var(--space-2); font-size: 0.96rem; color: var(--surface-dark); line-height: 1.55; }
+  .logros li::before { content: '▸'; color: var(--micro-acento-suave); font-weight: 700; flex-shrink: 0; }
+  .herramientas { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .herramientas li {
+    font-size: 0.82rem;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: var(--radius-pill);
+    background: rgba(107, 39, 55, 0.06);
+    color: var(--micro-acento);
+    border: 1px solid rgba(107, 39, 55, 0.12);
+  }
+
+  @media (max-width: 900px) {
+    .ficha-item { grid-template-columns: 1fr; gap: var(--space-3); }
+    .ficha-lomo { flex-direction: row; padding-top: 0; gap: var(--space-3); }
+    .lomo-numeral { margin-bottom: 0; }
+    .lomo-line { width: auto; height: 2px; flex-grow: 1; background: linear-gradient(90deg, var(--micro-acento), transparent); }
+    .ficha-card { padding: var(--space-4); }
+  }
+</style>
