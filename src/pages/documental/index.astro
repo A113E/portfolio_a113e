@@ -1,0 +1,506 @@
+---
+import MicrositeLayout from '../../layouts/MicrositeLayout.astro';
+import FloatingCV from '../../components/FloatingCV.astro';
+import { perfil, trayectoria, titulosOficiales, idiomas } from '../../data/documental';
+import CVButton from '../../components/CVButton.astro';
+
+const navLinks = [
+  { href: '/documental', label: 'Portada' },
+  { href: '/documental/trayectoria', label: 'Trayectoria' },
+  { href: '/documental/habilidades', label: 'Habilidades' },
+  { href: '/documental/formacion', label: 'Formación' },
+];
+
+const subsecciones = [
+  {
+    numero: '01',
+    href: '/documental/trayectoria',
+    titulo: 'Trayectoria',
+    descripcion: 'Experiencia profesional en gestión documental, digitalización y bibliotecología.',
+    icono: 'expediente',
+  },
+  {
+    numero: '02',
+    href: '/documental/habilidades',
+    titulo: 'Habilidades',
+    descripcion: 'Herramientas informáticas, soft skills y competencias técnicas del ámbito documental.',
+    icono: 'herramientas',
+  },
+  {
+    numero: '03',
+    href: '/documental/formacion',
+    titulo: 'Formación',
+    descripcion: 'Títulos, certificaciones y formación continua relevante para el área.',
+    icono: 'diploma',
+  },
+];
+
+const iconos = {
+  expediente: `<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>`,
+  herramientas: `<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`,
+  diploma: `<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>`,
+};
+---
+
+<MicrositeLayout
+  nombre="Documental"
+  acento="#2E4756"
+  acentoSuave="#B87333"
+  navLinks={navLinks}
+  title="Gestión Documental — Alberto Adrián Mártir González"
+  description="Especialista en gestión documental, información científica y digitalización. Experiencia en bibliotecología, organización de fondos documentales y herramientas informáticas de archivo."
+>
+  <!-- ============ FICHA DE ARCHIVO ============ -->
+  <section class="ficha-hero">
+    <div class="container">
+      <div class="ficha">
+        <div class="ficha-photo">
+          <img src="/img/albe_inv.png" alt="Retrato de Alberto M." />
+          <span class="ficha-photo-tag">Retrato</span>
+        </div>
+
+        <div class="ficha-body">
+          <span class="ficha-kicker">Ficha profesional</span>
+          <h1 class="ficha-name display">
+            {perfil.nombre}<span class="ficha-dot">.</span>
+          </h1>
+          <p class="ficha-titular">{perfil.titular}</p>
+
+          <dl class="ficha-meta">
+            <div class="ficha-meta-item">
+              <dt>Área</dt>
+              <dd>Gestión Documental</dd>
+            </div>
+            <div class="ficha-meta-item">
+              <dt>Perfil</dt>
+              <dd>Especialista en información</dd>
+            </div>
+            <div class="ficha-meta-item">
+              <dt>Ubicación</dt>
+              <dd>{perfil.ubicacion}</dd>
+            </div>
+            <div class="ficha-meta-item">
+              <dt>Disponibilidad</dt>
+              <dd>
+                <span class="estado-dot" aria-hidden="true"></span>
+                {perfil.disponibilidad}
+              </dd>
+            </div>
+            <div class="ficha-meta-item">
+              <dt>Idiomas</dt>
+              <dd>
+                {idiomas.map((i, idx) => (
+                  <span>{i.nombre} <em>({i.etiqueta})</em>{idx < idiomas.length - 1 ? ' · ' : ''}</span>
+                ))}
+              </dd>
+            </div>
+            <div class="ficha-meta-item">
+              <dt>CV</dt>
+              <dd>
+                <a href={perfil.cv} class="ficha-cv">
+                  Ver CV <span aria-hidden="true">→</span>
+                </a>
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BANDA DE CREDIBILIDAD ============ -->
+  <section class="banda">
+    <div class="container banda-inner">
+      <div class="banda-item">
+        <strong>+4</strong>
+        <span>años de experiencia</span>
+      </div>
+      <div class="banda-divider" aria-hidden="true"></div>
+      <div class="banda-item banda-logos">
+        <span class="banda-label">Experiencia en</span>
+        <div class="banda-logos-row">
+          {trayectoria.map((t) => (
+            <img src={t.logo} alt={t.institucion} title={t.institucion} />
+          ))}
+        </div>
+      </div>
+      <div class="banda-divider" aria-hidden="true"></div>
+      <div class="banda-item">
+        <strong>{titulosOficiales.length}</strong>
+        <span>títulos y certificaciones</span>
+      </div>
+      <div class="banda-divider" aria-hidden="true"></div>
+      <div class="banda-item">
+        <strong>1</strong>
+        <span>Título de Oro</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SUBSECCIONES ============ -->
+  <section class="subsecciones">
+    <div class="container">
+      <header class="sub-head">
+        <span class="sub-eyebrow">Explora</span>
+        <h2 class="display sub-title">
+          Tres capas del perfil<span class="ficha-dot">.</span>
+        </h2>
+        <p class="sub-desc">
+          Cada sección profundiza en un aspecto concreto. Navega por la que
+          más te interese.
+        </p>
+      </header>
+
+      <div class="tabs">
+        {subsecciones.map((s) => (
+          <a href={s.href} class="tab">
+            <div class="tab-top">
+              <span class="tab-icon" set:html={iconos[s.icono]} />
+              <span class="tab-num">{s.numero}</span>
+            </div>
+            <h3 class="tab-title display">{s.titulo}</h3>
+            <p class="tab-desc">{s.descripcion}</p>
+            <span class="tab-arrow" aria-hidden="true">→</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <FloatingCV href={perfil.cv} />
+</MicrositeLayout>
+
+<style>
+  /* ---------- FICHA HERO ---------- */
+  .ficha-hero {
+    padding: var(--space-7) 0 var(--space-6);
+  }
+  .ficha {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--space-6);
+    align-items: start;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    position: relative;
+    overflow: hidden;
+  }
+  .ficha::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--micro-acento), var(--micro-acento-suave));
+  }
+
+  .ficha-photo {
+    position: relative;
+  }
+  .ficha-photo img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+  }
+  .ficha-photo-tag {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: rgba(30, 42, 56, 0.85);
+    color: var(--text-inverse);
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    backdrop-filter: blur(6px);
+  }
+
+  .ficha-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .ficha-kicker {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--micro-acento-suave);
+  }
+  .ficha-name {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin: 0;
+    color: var(--surface-dark);
+    line-height: 1.1;
+  }
+  .ficha-dot {
+    color: var(--micro-acento-suave);
+  }
+  .ficha-titular {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin: 0;
+    font-weight: 500;
+  }
+
+  .ficha-meta {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3) var(--space-5);
+    margin: var(--space-3) 0 0;
+    padding: var(--space-4) 0 0;
+    border-top: 1px dashed var(--border);
+  }
+  .ficha-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .ficha-meta-item dt {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .ficha-meta-item dd {
+    margin: 0;
+    font-size: 0.92rem;
+    color: var(--surface-dark);
+    font-weight: 500;
+  }
+  .ficha-meta-item dd em {
+    font-style: normal;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+  .estado-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #4CAF50;
+    margin-right: 6px;
+    vertical-align: middle;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.18);
+  }
+  .ficha-cv {
+    color: var(--micro-acento);
+    font-weight: 600;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 1px;
+    transition: color var(--transition-fast);
+  }
+  .ficha-cv:hover {
+    color: var(--micro-acento-suave);
+  }
+
+  /* ---------- BANDA ---------- */
+  .banda {
+    padding: var(--space-6) 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: rgba(46, 71, 86, 0.03);
+  }
+  .banda-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+  .banda-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .banda-item strong {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--micro-acento);
+    line-height: 1;
+  }
+  .banda-item span {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+  .banda-divider {
+    width: 1px;
+    height: 40px;
+    background: var(--border);
+  }
+  .banda-logos {
+    gap: 8px;
+  }
+  .banda-label {
+    font-size: 0.68rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.16em !important;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .banda-logos-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .banda-logos-row img {
+    height: 34px;
+    width: 34px;
+    object-fit: contain;
+    border-radius: 6px;
+    filter: grayscale(0.4);
+    opacity: 0.85;
+    transition: filter var(--transition-fast), opacity var(--transition-fast), transform var(--transition-fast);
+  }
+  .banda-logos-row img:hover {
+    filter: none;
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+
+  /* ---------- SUBSECCIONES ---------- */
+  .subsecciones {
+    padding: var(--space-7) 0 var(--space-8);
+  }
+  .sub-head {
+    max-width: 620px;
+    margin-bottom: var(--space-5);
+  }
+  .sub-eyebrow {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--micro-acento-suave);
+    margin-bottom: var(--space-2);
+  }
+  .sub-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin: 0 0 var(--space-2);
+    color: var(--surface-dark);
+  }
+  .sub-desc {
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .tabs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+  }
+  .tab {
+    position: relative;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-5) var(--space-4) var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    overflow: hidden;
+    transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+  }
+  .tab::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    height: 3px;
+    background: var(--micro-acento);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease);
+  }
+  .tab:hover {
+    transform: translateY(-6px) rotate(-0.6deg);
+    box-shadow: var(--shadow-lg);
+    border-color: transparent;
+  }
+  .tab:hover::before {
+    transform: scaleX(1);
+  }
+  .tab-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--micro-acento);
+  }
+  .tab-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-sm);
+    background: rgba(46, 71, 86, 0.08);
+    color: var(--micro-acento);
+  }
+  .tab-num {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--micro-acento-suave);
+  }
+  .tab-title {
+    font-size: 1.5rem;
+    margin: 0;
+    color: var(--surface-dark);
+  }
+  .tab-desc {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    margin: 0;
+    flex-grow: 1;
+  }
+  .tab-arrow {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    transition: transform var(--transition-base), color var(--transition-base);
+  }
+  .tab:hover .tab-arrow {
+    transform: translateX(6px);
+    color: var(--micro-acento);
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 900px) {
+    .ficha {
+      grid-template-columns: 1fr;
+      padding: var(--space-4);
+      gap: var(--space-4);
+    }
+    .ficha-photo img {
+      max-width: 220px;
+      margin: 0 auto;
+    }
+    .ficha-meta {
+      grid-template-columns: 1fr;
+    }
+    .tabs {
+      grid-template-columns: 1fr;
+    }
+    .banda-inner {
+      justify-content: center;
+      text-align: center;
+    }
+    .banda-item {
+      align-items: center;
+    }
+    .banda-divider {
+      display: none;
+    }
+  }
+</style>

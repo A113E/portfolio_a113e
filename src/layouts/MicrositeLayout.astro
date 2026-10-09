@@ -1,0 +1,41 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import MicrositeNav from '../components/MicrositeNav.astro';
+
+interface NavLink {
+  href: string;
+  label: string;
+}
+
+interface Props {
+  nombre: string;
+  acento?: string;
+  acentoSuave?: string;
+  navLinks: NavLink[];
+  title?: string;
+  description?: string;
+}
+
+const {
+  nombre,
+  acento = '#2E4756',
+  acentoSuave = '#B87333',
+  navLinks,
+  title,
+  description,
+} = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="microsite" style={`--acento: ${acento}; --acento-suave: ${acentoSuave};`}>
+    <MicrositeNav nombre={nombre} links={navLinks} />
+    <slot />
+  </div>
+</BaseLayout>
+
+<style>
+  .microsite {
+    --micro-acento: var(--acento);
+    --micro-acento-suave: var(--acento-suave);
+  }
+</style>

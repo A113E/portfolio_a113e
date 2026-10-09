@@ -1,0 +1,133 @@
+---
+import CVLayout from '../layouts/CVLayout.astro';
+import Icon from '../components/Icon.astro';
+import {
+  perfil,
+  experiencia,
+  proyectos,
+  habilidades,
+  formacion,
+  idiomas,
+  softSkills,
+} from '../data/cv-general';
+
+const contacto = [
+  { icono: 'email', valor: perfil.email },
+  { icono: 'telefono', valor: perfil.telefono },
+  { icono: 'ubicacion', valor: perfil.ubicacion },
+  { icono: 'linkedin', valor: perfil.linkedin },
+  { icono: 'github', valor: perfil.github },
+  { icono: 'orcid', valor: perfil.orcid },
+];
+---
+
+<CVLayout title="CV — Alberto Adrián Mártir González · Portafolio profesional">
+  <!-- ============ CABECERA ============ -->
+  <header class="cv-header">
+    <div class="cv-photo">
+      <img src="/img/albe.png" alt="Foto de perfil de Alberto M." />
+    </div>
+    <div class="cv-header-main">
+      <h1 class="cv-name">{perfil.nombre}</h1>
+      <p class="cv-title">{perfil.titular}</p>
+    </div>
+    <ul class="cv-contact">
+      {contacto.map((c) => (
+        <li>
+          <Icon name={c.icono} size={14} stroke={1.8} />
+          <span>{c.valor}</span>
+        </li>
+      ))}
+    </ul>
+  </header>
+
+  <!-- ============ PERFIL ============ -->
+  <section class="cv-section">
+    <h2 class="cv-section-title">Perfil profesional</h2>
+    <p class="cv-summary">{perfil.resumen}</p>
+  </section>
+
+  <!-- ============ EXPERIENCIA ============ -->
+  <section class="cv-section">
+    <h2 class="cv-section-title">Experiencia profesional</h2>
+    {experiencia.map((e) => (
+      <article class="cv-job">
+        <header class="cv-job-head">
+          <div>
+            <h3 class="cv-job-cargo">{e.cargo}</h3>
+            <p class="cv-job-inst">{e.institucion} · {e.ubicacion}</p>
+          </div>
+          <span class="cv-job-periodo">{e.periodo}</span>
+        </header>
+        <ul class="cv-job-funciones">
+          {e.funciones.map((f) => <li>{f}</li>)}
+        </ul>
+        {e.logros.length > 0 && (
+          <ul class="cv-job-logros">
+            {e.logros.map((l) => <li>{l}</li>)}
+          </ul>
+        )}
+      </article>
+    ))}
+  </section>
+
+  <!-- ============ PROYECTOS ============ -->
+  <section class="cv-section">
+    <h2 class="cv-section-title">Proyectos destacados</h2>
+    <ul class="cv-proyectos">
+      {proyectos.map((p) => (
+        <li>
+          <strong>{p.nombre}</strong> — {p.institucion} ({p.periodo}). {p.descripcion}
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- ============ HABILIDADES ============ -->
+  <section class="cv-section">
+    <h2 class="cv-section-title">Habilidades técnicas</h2>
+    <div class="cv-skills-grid">
+      {habilidades.map((h) => (
+        <div class="cv-skill-group">
+          <h3 class="cv-skill-cat">{h.categoria}</h3>
+          <p class="cv-skill-list">{h.items.join(' · ')}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ============ FORMACIÓN ============ -->
+  <section class="cv-section">
+    <h2 class="cv-section-title">Formación</h2>
+    {formacion.map((f) => (
+      <article class="cv-edu">
+        <header class="cv-edu-head">
+          <div>
+            <h3 class="cv-edu-titulo">{f.titulo}</h3>
+            <p class="cv-edu-inst">{f.institucion}</p>
+          </div>
+          <span class="cv-edu-periodo">{f.periodo}</span>
+        </header>
+        {f.destacado && <p class="cv-edu-destacado">{f.destacado}</p>}
+      </article>
+    ))}
+  </section>
+
+  <!-- ============ IDIOMAS Y SOFT SKILLS ============ -->
+  <section class="cv-section cv-section-final">
+    <div class="cv-two-col">
+      <div>
+        <h2 class="cv-section-title">Idiomas</h2>
+        <ul class="cv-idiomas">
+          {idiomas.map((i) => (
+            <li><strong>{i.nombre}</strong> — {i.nivel} ({i.etiqueta})</li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h2 class="cv-section-title">Soft skills</h2>
+        <p class="cv-soft">{softSkills.join(' · ')}</p>
+      </div>
+    </div>
+  </section>
+</CVLayout>

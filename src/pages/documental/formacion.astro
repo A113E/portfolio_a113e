@@ -1,0 +1,561 @@
+---
+import MicrositeLayout from '../../layouts/MicrositeLayout.astro';
+import FloatingCV from '../../components/FloatingCV.astro';
+import Icon from '../../components/Icon.astro';
+import {
+  perfil,
+  titulosOficiales,
+  certificaciones,
+  formacionComplementaria,
+} from '../../data/documental';
+import CVButton from '../../components/CVButton.astro';
+
+const navLinks = [
+  { href: '/documental', label: 'Portada' },
+  { href: '/documental/trayectoria', label: 'Trayectoria' },
+  { href: '/documental/habilidades', label: 'Habilidades' },
+  { href: '/documental/formacion', label: 'Formación' },
+];
+
+const total = titulosOficiales.length + certificaciones.length + formacionComplementaria.length;
+---
+
+<MicrositeLayout
+  nombre="Documental"
+  acento="#2E4756"
+  acentoSuave="#B87333"
+  navLinks={navLinks}
+  title="Formación — Alberto M. · Gestión Documental"
+  description="Títulos oficiales, certificaciones internacionales y formación continua relevante para la gestión documental."
+>
+  <!-- ============ CABECERA ============ -->
+  <section class="page-head">
+    <div class="container">
+      <span class="head-eyebrow">Sección 03</span>
+      <h1 class="display head-title">
+        Formación<span class="head-dot">.</span>
+      </h1>
+      <p class="head-desc">
+        Títulos oficiales, certificaciones internacionales y formación continua
+        que respaldan el perfil documental.
+      </p>
+
+      <ul class="stats">
+        <li><strong>{titulosOficiales.length}</strong> <span>títulos oficiales</span></li>
+        <li><strong>{certificaciones.length}</strong> <span>certificaciones</span></li>
+        <li><strong>{formacionComplementaria.length}</strong> <span>cursos complementarios</span></li>
+        <li><strong>{total}</strong> <span>en total</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ TÍTULOS OFICIALES ============ -->
+  <section class="titulos-section">
+    <div class="container">
+      <header class="block-head">
+        <span class="block-eyebrow">01 — Formación reglada</span>
+        <h2 class="display block-title">
+          Títulos oficiales<span class="head-dot">.</span>
+        </h2>
+      </header>
+
+      <div class="titulos-grid">
+        {titulosOficiales.map((t) => (
+          <article class={`titulo-card ${t.destacado ? 'titulo-card-featured' : ''}`}>
+            <div class="titulo-ribbon">
+              <span>{t.rango}</span>
+            </div>
+
+            {t.destacado && (
+              <div class="titulo-sello">
+                <Icon name="award" size={18} stroke={1.8} />
+                <span>{t.destacado}</span>
+              </div>
+            )}
+
+            <header class="titulo-head">
+              <h3 class="titulo-name display">{t.titulo}</h3>
+              <p class="titulo-inst">{t.institucion} · {t.ubicacion}</p>
+              <span class="titulo-periodo">{t.periodo}</span>
+            </header>
+
+            <ul class="titulo-menciones">
+              {t.menciones.map((m) => (
+                <li>
+                  <span class="mencion-marker" aria-hidden="true">·</span>
+                  {m}
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CERTIFICACIONES ============ -->
+  <section class="cert-section">
+    <div class="container">
+      <header class="block-head">
+        <span class="block-eyebrow">02 — Formación continua</span>
+        <h2 class="display block-title">
+          Certificaciones<span class="head-dot">.</span>
+        </h2>
+      </header>
+
+      <div class="cert-grid">
+        {certificaciones.map((c) => (
+          <article class="cert-card">
+            <header class="cert-head">
+              <div class="cert-icon">
+                <Icon name="certificate" size={22} stroke={1.7} />
+              </div>
+              <div class="cert-head-info">
+                <h3 class="cert-name display">{c.titulo}</h3>
+                <p class="cert-inst">{c.institucion}</p>
+              </div>
+            </header>
+
+            <div class="cert-meta">
+              <span class="cert-meta-item">
+                <Icon name="calendar" size={14} stroke={1.7} />
+                {c.periodo}
+              </span>
+              <span class="cert-meta-item">
+                <Icon name="map-pin" size={14} stroke={1.7} />
+                {c.modalidad}
+              </span>
+            </div>
+
+            <p class="cert-desc">{c.descripcion}</p>
+
+            <ul class="cert-tags">
+              {c.tags.map((t) => <li>{t}</li>)}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FORMACIÓN COMPLEMENTARIA ============ -->
+  <section class="comp-section">
+    <div class="container">
+      <header class="block-head">
+        <span class="block-eyebrow">03 — Actualización permanente</span>
+        <h2 class="display block-title">
+          Formación complementaria<span class="head-dot">.</span>
+        </h2>
+        <p class="block-desc">
+          Cursos, herramientas y metodologías en las que me he formado para
+          reforzar el perfil documental.
+        </p>
+      </header>
+
+      <ul class="comp-list">
+        {formacionComplementaria.map((f) => (
+          <li>
+            <span class="comp-marker" aria-hidden="true"></span>
+            {f}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ CTA FINAL ============ -->
+  <section class="cta-final">
+    <div class="container cta-inner">
+      <div>
+        <h2 class="display cta-title">
+          Cierre del perfil<span class="head-dot">.</span>
+        </h2>
+        <p class="cta-desc">
+          Vuelve a la portada del micrositio o descarga el CV específico de
+          gestión documental.
+        </p>
+      </div>
+      <div class="cta-actions">
+        <CVButton href={perfil.cv} label="Descargar CV" />
+        <a href="/documental" class="btn btn-ghost">
+          Volver a la portada →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <FloatingCV href={perfil.cv} />
+</MicrositeLayout>
+
+<style>
+  /* ---------- CABECERA ---------- */
+  .page-head {
+    padding: var(--space-7) 0 var(--space-5);
+  }
+  .head-eyebrow {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--micro-acento-suave);
+    margin-bottom: var(--space-3);
+  }
+  .head-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    margin: 0 0 var(--space-3);
+    color: var(--surface-dark);
+  }
+  .head-dot { color: var(--micro-acento-suave); }
+  .head-desc {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    max-width: 680px;
+    margin: 0 0 var(--space-5);
+  }
+
+  .stats {
+    list-style: none;
+    padding: var(--space-4) 0 0;
+    margin: 0;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: var(--space-6);
+    flex-wrap: wrap;
+  }
+  .stats li {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .stats strong {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--micro-acento);
+    line-height: 1;
+  }
+  .stats span {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* ---------- BLOQUES GENÉRICOS ---------- */
+  .titulos-section { padding: var(--space-5) 0 var(--space-7); }
+  .cert-section {
+    padding: var(--space-7) 0;
+    background: rgba(46, 71, 86, 0.03);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .comp-section { padding: var(--space-7) 0; }
+
+  .block-head {
+    max-width: 620px;
+    margin-bottom: var(--space-5);
+  }
+  .block-eyebrow {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--micro-acento-suave);
+    margin-bottom: var(--space-2);
+  }
+  .block-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    margin: 0 0 var(--space-2);
+    color: var(--surface-dark);
+  }
+  .block-desc {
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  /* ---------- TÍTULOS OFICIALES ---------- */
+  .titulos-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: var(--space-4);
+  }
+  .titulo-card {
+    position: relative;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6) var(--space-5) var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    overflow: hidden;
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+  }
+  .titulo-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .titulo-ribbon {
+    position: absolute;
+    top: 0;
+    left: var(--space-5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 14px;
+    background: var(--micro-acento);
+    color: var(--text-inverse);
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  }
+  .titulo-ribbon span {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .titulo-sello {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: linear-gradient(135deg, rgba(184, 115, 51, 0.15), rgba(184, 115, 51, 0.05));
+    border: 1px solid var(--micro-acento-suave);
+    color: var(--micro-acento-suave);
+    border-radius: var(--radius-pill);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: var(--space-4);
+  }
+
+  .titulo-card-featured {
+    background: linear-gradient(180deg, var(--bg-elevated), rgba(184, 115, 51, 0.03));
+    border-color: rgba(184, 115, 51, 0.3);
+  }
+
+  .titulo-head {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .titulo-name {
+    font-size: 1.55rem;
+    margin: 0;
+    color: var(--surface-dark);
+    line-height: 1.2;
+  }
+  .titulo-inst {
+    font-size: 0.95rem;
+    color: var(--micro-acento);
+    font-weight: 600;
+    margin: 0;
+  }
+  .titulo-periodo {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+    margin-top: 2px;
+  }
+
+  .titulo-menciones {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-top: var(--space-4);
+    border-top: 1px dashed var(--border);
+  }
+  .titulo-menciones li {
+    display: flex;
+    gap: var(--space-2);
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .mencion-marker {
+    color: var(--micro-acento-suave);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* ---------- CERTIFICACIONES ---------- */
+  .cert-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+  .cert-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+  }
+  .cert-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+  }
+  .cert-head {
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
+  }
+  .cert-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    background: rgba(46, 71, 86, 0.08);
+    color: var(--micro-acento);
+    flex-shrink: 0;
+  }
+  .cert-head-info {
+    min-width: 0;
+  }
+  .cert-name {
+    font-size: 1.15rem;
+    margin: 0 0 2px;
+    color: var(--surface-dark);
+    line-height: 1.25;
+  }
+  .cert-inst {
+    font-size: 0.88rem;
+    color: var(--micro-acento);
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .cert-meta {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    padding: var(--space-2) 0;
+    border-top: 1px dashed var(--border);
+    border-bottom: 1px dashed var(--border);
+  }
+  .cert-meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .cert-desc {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.55;
+  }
+
+  .cert-tags {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .cert-tags li {
+    font-size: 0.76rem;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    background: rgba(46, 71, 86, 0.06);
+    color: var(--micro-acento);
+    border: 1px solid rgba(46, 71, 86, 0.12);
+  }
+
+  /* ---------- FORMACIÓN COMPLEMENTARIA ---------- */
+  .comp-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--space-2) var(--space-4);
+  }
+  .comp-list li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: 10px var(--space-3);
+    border-radius: var(--radius-sm);
+    font-size: 0.92rem;
+    color: var(--surface-dark);
+    font-weight: 500;
+    transition: background var(--transition-fast);
+  }
+  .comp-list li:hover {
+    background: rgba(46, 71, 86, 0.04);
+  }
+  .comp-marker {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--micro-acento-suave);
+    flex-shrink: 0;
+  }
+
+  /* ---------- CTA FINAL ---------- */
+  .cta-final {
+    padding: var(--space-6) 0 var(--space-7);
+    border-top: 1px solid var(--border);
+  }
+  .cta-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-5);
+    flex-wrap: wrap;
+  }
+  .cta-title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin: 0 0 var(--space-2);
+    color: var(--surface-dark);
+  }
+  .cta-desc {
+    color: var(--text-muted);
+    margin: 0;
+    max-width: 520px;
+  }
+  .cta-actions {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 900px) {
+    .titulos-grid {
+      grid-template-columns: 1fr;
+    }
+    .cert-grid {
+      grid-template-columns: 1fr;
+    }
+    .cta-inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .cta-actions {
+      width: 100%;
+    }
+    .cta-actions .btn {
+      flex: 1;
+      justify-content: center;
+    }
+  }
+</style>

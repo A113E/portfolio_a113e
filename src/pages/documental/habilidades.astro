@@ -1,0 +1,482 @@
+---
+import MicrositeLayout from '../../layouts/MicrositeLayout.astro';
+import FloatingCV from '../../components/FloatingCV.astro';
+import Icon from '../../components/Icon.astro';
+import { perfil, habilidades, softSkills, idiomas } from '../../data/documental';
+import CVButton from '../../components/CVButton.astro';
+
+const navLinks = [
+  { href: '/documental', label: 'Portada' },
+  { href: '/documental/trayectoria', label: 'Trayectoria' },
+  { href: '/documental/habilidades', label: 'Habilidades' },
+  { href: '/documental/formacion', label: 'Formación' },
+];
+
+const totalHerramientas = habilidades.categorias.reduce((acc, c) => acc + c.items.length, 0);
+const totalCategorias = habilidades.categorias.length;
+---
+
+<MicrositeLayout
+  nombre="Documental"
+  acento="#2E4756"
+  acentoSuave="#B87333"
+  navLinks={navLinks}
+  title="Habilidades en gestión documental — Alberto M."
+  description="Inventario de herramientas informáticas, soft skills e idiomas aplicados a la gestión documental."
+>
+  <!-- ============ CABECERA ============ -->
+  <section class="page-head">
+    <div class="container">
+      <span class="head-eyebrow">Sección 02</span>
+      <h1 class="display head-title">
+        Habilidades<span class="head-dot">.</span>
+      </h1>
+      <p class="head-desc">
+        Inventario de herramientas informáticas, competencias técnicas y soft
+        skills aplicadas al ciclo completo del documento: creación, organización,
+        digitalización, preservación y recuperación.
+      </p>
+
+      <ul class="stats">
+        <li><strong>{totalCategorias}</strong> <span>categorías</span></li>
+        <li><strong>{totalHerramientas}</strong> <span>herramientas</span></li>
+        <li><strong>{softSkills.length}</strong> <span>soft skills</span></li>
+        <li><strong>{idiomas.length}</strong> <span>idiomas</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ CATEGORÍAS ============ -->
+  <section class="categorias-section">
+    <div class="container">
+      <div class="categorias">
+        {habilidades.categorias.map((cat) => (
+          <article class="categoria" style={`--cat-color: ${cat.color};`}>
+            <header class="categoria-head">
+              <div class="cat-icon-wrap">
+                <Icon name={cat.icono} size={26} />
+              </div>
+              <div class="cat-info">
+                <h2 class="cat-title display">{cat.titulo}</h2>
+                <p class="cat-desc">{cat.descripcion}</p>
+              </div>
+              <span class="cat-count">{cat.items.length}</span>
+            </header>
+
+            <ul class="cat-items">
+              {cat.items.map((item) => (
+                <li class="item">
+                  <span class="item-icon">
+                    <Icon name={item.icono} size={18} stroke={1.6} />
+                  </span>
+                  <span class="item-name">{item.nombre}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SOFT SKILLS ============ -->
+  <section class="soft-section">
+    <div class="container">
+      <header class="soft-head">
+        <span class="head-eyebrow">Transversales</span>
+        <h2 class="display soft-title">
+          Soft skills<span class="head-dot">.</span>
+        </h2>
+        <p class="soft-desc">
+          Competencias de comportamiento aplicadas al trabajo documental.
+        </p>
+      </header>
+
+      <ul class="soft-list">
+        {softSkills.map((s, i) => (
+          <li class="soft-item">
+            <span class="soft-numeral">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3 class="soft-name">{s.nombre}</h3>
+              <p class="soft-detail">{s.detalle}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ IDIOMAS ============ -->
+  <section class="idiomas-section">
+    <div class="container">
+      <header class="soft-head">
+        <span class="head-eyebrow">Comunicación</span>
+        <h2 class="display soft-title">
+          Idiomas<span class="head-dot">.</span>
+        </h2>
+      </header>
+
+      <ul class="idiomas-list">
+        {idiomas.map((i) => (
+          <li class="idioma-item">
+            <div class="idioma-head">
+              <span class="idioma-nombre">{i.nombre}</span>
+              <span class="idioma-nivel">{i.nivel} · {i.etiqueta}</span>
+            </div>
+            <div class="idioma-bar" role="img" aria-label={`${i.nombre}: ${i.nivel}`}>
+              <span class="idioma-fill" style={`width: ${i.valor}%`}></span>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ CTA FINAL ============ -->
+  <section class="cta-final">
+    <div class="container cta-inner">
+      <div>
+        <h2 class="display cta-title">
+          ¿Ves encaje<span class="head-dot">?</span>
+        </h2>
+        <p class="cta-desc">
+          Revisa la formación o descarga directamente el CV del área.
+        </p>
+      </div>
+      <div class="cta-actions">
+        <CVButton href={perfil.cv} label="Descargar CV" />
+        <a href="/documental/formacion" class="btn btn-ghost">
+          Ver formación →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <FloatingCV href={perfil.cv} />
+</MicrositeLayout>
+
+<style>
+  /* ---------- CABECERA ---------- */
+  .page-head {
+    padding: var(--space-7) 0 var(--space-5);
+  }
+  .head-eyebrow {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--micro-acento-suave);
+    margin-bottom: var(--space-3);
+  }
+  .head-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    margin: 0 0 var(--space-3);
+    color: var(--surface-dark);
+  }
+  .head-dot {
+    color: var(--micro-acento-suave);
+  }
+  .head-desc {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    max-width: 680px;
+    margin: 0 0 var(--space-5);
+  }
+
+  .stats {
+    list-style: none;
+    padding: var(--space-4) 0 0;
+    margin: 0;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: var(--space-6);
+    flex-wrap: wrap;
+  }
+  .stats li {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .stats strong {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--micro-acento);
+    line-height: 1;
+  }
+  .stats span {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* ---------- CATEGORÍAS ---------- */
+  .categorias-section {
+    padding: var(--space-5) 0 var(--space-7);
+  }
+  .categorias {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .categoria {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--cat-color);
+    border-radius: var(--radius);
+    padding: var(--space-5);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+  }
+  .categoria:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .categoria-head {
+    display: grid;
+    grid-template-columns: 52px 1fr auto;
+    gap: var(--space-4);
+    align-items: center;
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px dashed var(--border);
+  }
+  .cat-icon-wrap {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--cat-color) 12%, transparent);
+    color: var(--cat-color);
+  }
+  .cat-info {
+    min-width: 0;
+  }
+  .cat-title {
+    font-size: 1.3rem;
+    margin: 0 0 2px;
+    color: var(--surface-dark);
+  }
+  .cat-desc {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin: 0;
+  }
+  .cat-count {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--cat-color);
+    background: color-mix(in srgb, var(--cat-color) 10%, transparent);
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    line-height: 1;
+  }
+
+  .cat-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--space-2);
+  }
+  .item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: 10px var(--space-3);
+    background: var(--bg);
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    transition: border-color var(--transition-fast), background var(--transition-fast);
+  }
+  .item:hover {
+    background: color-mix(in srgb, var(--cat-color) 6%, transparent);
+    border-color: color-mix(in srgb, var(--cat-color) 25%, transparent);
+  }
+  .item-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cat-color);
+    flex-shrink: 0;
+  }
+  .item-name {
+    font-size: 0.9rem;
+    color: var(--surface-dark);
+    font-weight: 500;
+  }
+
+  /* ---------- SOFT SKILLS ---------- */
+  .soft-section {
+    padding: var(--space-7) 0;
+    background: rgba(46, 71, 86, 0.03);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .soft-head {
+    max-width: 620px;
+    margin-bottom: var(--space-5);
+  }
+  .soft-title {
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    margin: var(--space-3) 0 var(--space-2);
+    color: var(--surface-dark);
+  }
+  .soft-desc {
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .soft-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+  .soft-item {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: var(--space-3);
+    align-items: start;
+    padding: var(--space-4);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+  }
+  .soft-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  .soft-numeral {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--micro-acento-suave);
+    line-height: 1;
+  }
+  .soft-name {
+    font-size: 1rem;
+    margin: 0 0 4px;
+    color: var(--surface-dark);
+    font-weight: 600;
+  }
+  .soft-detail {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* ---------- IDIOMAS ---------- */
+  .idiomas-section {
+    padding: var(--space-7) 0 var(--space-8);
+  }
+  .idiomas-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-width: 560px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+  .idioma-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+  .idioma-nombre {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--surface-dark);
+  }
+  .idioma-nivel {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+  .idioma-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--border);
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+  }
+  .idioma-fill {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, var(--micro-acento), var(--micro-acento-suave));
+    border-radius: var(--radius-pill);
+    transition: width 0.6s var(--ease);
+  }
+
+  /* ---------- CTA FINAL ---------- */
+  .cta-final {
+    padding: var(--space-6) 0 var(--space-7);
+    border-top: 1px solid var(--border);
+  }
+  .cta-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-5);
+    flex-wrap: wrap;
+  }
+  .cta-title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin: 0 0 var(--space-2);
+    color: var(--surface-dark);
+  }
+  .cta-desc {
+    color: var(--text-muted);
+    margin: 0;
+    max-width: 520px;
+  }
+  .cta-actions {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 900px) {
+    .soft-list {
+      grid-template-columns: 1fr;
+    }
+    .categoria {
+      padding: var(--space-4);
+    }
+    .categoria-head {
+      grid-template-columns: 44px 1fr auto;
+      gap: var(--space-3);
+    }
+    .cat-icon-wrap {
+      width: 44px;
+      height: 44px;
+    }
+    .cat-items {
+      grid-template-columns: 1fr;
+    }
+    .cta-inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .cta-actions {
+      width: 100%;
+    }
+    .cta-actions .btn {
+      flex: 1;
+      justify-content: center;
+    }
+  }
+</style>

@@ -7,7 +7,7 @@ const perfil = {
   titular: 'Licenciado en Sistemas de Información · Desarrollador Odoo · Investigador · Docente',
   resumen:
     'Profesional de las Ciencias de la Información con más de 4 años de experiencia en entornos académicos, empresariales y científicos. Combino el desarrollo de software (Odoo, Laravel, Full Stack), la gestión documental, la investigación y la docencia universitaria con un mismo criterio: rigor técnico, claridad y soluciones que duran.',
-  cv: '/cv/alberto-martir.pdf',
+  cv: '/cv',
 };
 
 const timeline = [
@@ -294,9 +294,9 @@ const idiomas = [
       <p class="about-titular">{perfil.titular}</p>
       <p class="about-resumen">{perfil.resumen}</p>
       <div class="about-actions">
-        <a href={perfil.cv} class="btn btn-primary" download>
+        <a href={perfil.cv} class="btn btn-primary">
           Descargar CV completo
-          <span aria-hidden="true">↓</span>
+          <span aria-hidden="true">→</span>
         </a>
         <a href="/contacto" class="btn btn-ghost">Contacto</a>
       </div>

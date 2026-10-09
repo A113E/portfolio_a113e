@@ -1,0 +1,496 @@
+---
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="print-bar no-print">
+      <button class="print-trigger" onclick="window.print()">
+        <span>Guardar CV como PDF</span>
+        <span aria-hidden="true">↓</span>
+      </button>
+      <div class="print-hint">
+        <p><strong>Antes de guardar:</strong></p>
+        <ul>
+          <li>Destino: <strong>Guardar como PDF</strong></li>
+          <li>Desmarca <strong>"Encabezados y pies de página"</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <main class="cv">
+      <slot />
+    </main>
+
+    <style is:global>
+      /* ============ BASE ============ */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        font-size: 16px;
+      }
+
+      body {
+        margin: 0;
+        background: #f8f7f5;
+        color: #1e2a38;
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        font-size: 10.5pt;
+        line-height: 1.45;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ============ BOTÓN DE IMPRESIÓN ============ */
+      .print-bar {
+        position: fixed;
+        right: 24px;
+        bottom: 24px;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 8px;
+        max-width: 320px;
+      }
+      .print-trigger {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 20px;
+        background: #2e4756;
+        color: #fff;
+        border: 0;
+        border-radius: 999px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 10px 30px rgba(30, 42, 56, 0.15);
+        transition: transform 0.2s ease, background 0.2s ease;
+      }
+      .print-trigger:hover {
+        background: #16202c;
+        transform: translateY(-2px);
+      }
+      .print-hint {
+        margin: 0;
+        font-size: 0.78rem;
+        color: #5a6772;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 10px 14px;
+        border-radius: 8px;
+        border: 1px solid #e5e2dc;
+        line-height: 1.45;
+        box-shadow: 0 4px 20px rgba(30, 42, 56, 0.08);
+        max-width: 280px;
+        text-align: left;
+      }
+      .print-hint p {
+        margin: 0 0 4px;
+        font-size: 0.78rem;
+        color: #1e2a38;
+      }
+      .print-hint ul {
+        margin: 0;
+        padding-left: 16px;
+        font-size: 0.76rem;
+      }
+      .print-hint li {
+        margin-bottom: 2px;
+      }
+      .print-hint strong {
+        color: #1e2a38;
+      }
+
+      /* ============ CONTENEDOR DEL CV ============ */
+      .cv {
+        max-width: 210mm;
+        margin: 40px auto;
+        background: #fff;
+        padding: 18mm 16mm;
+        box-shadow: 0 10px 40px rgba(30, 42, 56, 0.08);
+      }
+
+      /* ============ CABECERA ============ */
+      .cv-header {
+        display: grid;
+        grid-template-columns: 70px 1fr auto;
+        gap: 16px;
+        align-items: center;
+        padding-bottom: 12px;
+        margin-bottom: 14px;
+        border-bottom: 2px solid #2e4756;
+      }
+      .cv-photo {
+        width: 70px;
+        aspect-ratio: 3 / 4;
+        border-radius: 4px;
+        overflow: hidden;
+        border: 1px solid #e5e2dc;
+        background: #f8f7f5;
+        flex-shrink: 0;
+      }
+      .cv-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+        display: block;
+      }
+      .cv-header-main {
+        min-width: 0;
+      }
+      .cv-name {
+        font-size: 20pt;
+        font-weight: 700;
+        margin: 0 0 4px;
+        letter-spacing: -0.01em;
+        line-height: 1.1;
+        color: #1e2a38;
+      }
+      .cv-title {
+        font-size: 10pt;
+        color: #2e4756;
+        margin: 0;
+        font-weight: 600;
+      }
+      .cv-contact {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        font-size: 8.5pt;
+        color: #5a6772;
+        flex-shrink: 0;
+        text-align: right;
+      }
+      .cv-contact li {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 6px;
+        white-space: nowrap;
+      }
+
+      /* ============ SECCIONES ============ */
+      .cv-section {
+        margin-bottom: 14px;
+      }
+      .cv-section-final {
+        margin-bottom: 0;
+      }
+      .cv-section-title {
+        font-size: 10.5pt;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: #2e4756;
+        margin: 0 0 8px;
+        padding-bottom: 4px;
+        border-bottom: 1px solid #e5e2dc;
+      }
+      .cv-summary {
+        margin: 0;
+        color: #5a6772;
+        font-size: 10pt;
+        line-height: 1.5;
+      }
+
+      /* ============ EXPERIENCIA ============ */
+      .cv-job {
+        margin-bottom: 12px;
+        padding-bottom: 12px;
+        border-bottom: 1px dashed #e5e2dc;
+      }
+      .cv-job:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: 0;
+      }
+      .cv-job-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 16px;
+        margin-bottom: 6px;
+      }
+      .cv-job-cargo {
+        font-size: 11pt;
+        font-weight: 700;
+        margin: 0;
+        color: #1e2a38;
+      }
+      .cv-job-inst {
+        font-size: 9.5pt;
+        color: #5a6772;
+        margin: 2px 0 0;
+        font-weight: 500;
+      }
+      .cv-job-periodo {
+        font-size: 9pt;
+        color: #5a6772;
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      .cv-job-funciones {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 6px;
+      }
+      .cv-job-funciones li {
+        position: relative;
+        padding-left: 14px;
+        font-size: 9.5pt;
+        color: #5a6772;
+        margin-bottom: 2px;
+        line-height: 1.45;
+      }
+      .cv-job-funciones li::before {
+        content: '▸';
+        position: absolute;
+        left: 0;
+        color: #b87333;
+        font-weight: 700;
+      }
+      .cv-job-logros {
+        list-style: none;
+        padding: 6px 10px;
+        margin: 0;
+        background: rgba(184, 115, 51, 0.06);
+        border-left: 2px solid #b87333;
+        border-radius: 4px;
+      }
+      .cv-job-logros li {
+        font-size: 9pt;
+        color: #1e2a38;
+        margin-bottom: 2px;
+        line-height: 1.45;
+      }
+      .cv-job-logros li:last-child {
+        margin-bottom: 0;
+      }
+
+      /* ============ PROYECTOS ============ */
+      .cv-proyectos {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .cv-proyectos li {
+        font-size: 9.5pt;
+        color: #5a6772;
+        margin-bottom: 4px;
+        line-height: 1.45;
+      }
+      .cv-proyectos li strong {
+        color: #1e2a38;
+      }
+
+      /* ============ HABILIDADES ============ */
+      .cv-skills-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px 24px;
+      }
+      .cv-skill-group {
+        break-inside: avoid;
+      }
+      .cv-skill-cat {
+        font-size: 9pt;
+        font-weight: 700;
+        color: #b87333;
+        margin: 0 0 2px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      .cv-skill-list {
+        font-size: 9.5pt;
+        color: #5a6772;
+        margin: 0;
+        line-height: 1.45;
+      }
+
+      /* ============ FORMACIÓN ============ */
+      .cv-edu-block {
+        margin-bottom: 10px;
+      }
+      .cv-edu {
+        margin-bottom: 8px;
+        break-inside: avoid;
+      }
+      .cv-edu-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 16px;
+      }
+      .cv-edu-titulo {
+        font-size: 10.5pt;
+        font-weight: 700;
+        margin: 0;
+        color: #1e2a38;
+      }
+      .cv-edu-inst {
+        font-size: 9.5pt;
+        color: #5a6772;
+        margin: 2px 0 0;
+      }
+      .cv-edu-periodo {
+        font-size: 9pt;
+        color: #5a6772;
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+      }
+      .cv-edu-destacado {
+        font-size: 9pt;
+        color: #b87333;
+        margin: 2px 0 0;
+        font-weight: 600;
+      }
+      .cv-subtitle {
+        font-size: 9.5pt;
+        font-weight: 700;
+        color: #1e2a38;
+        margin: 10px 0 4px;
+      }
+      .cv-cert-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .cv-cert-list li {
+        font-size: 9.5pt;
+        color: #5a6772;
+        margin-bottom: 3px;
+        line-height: 1.45;
+      }
+      .cv-cert-list li strong {
+        color: #1e2a38;
+      }
+
+      /* ============ IDIOMAS Y SOFT SKILLS ============ */
+      .cv-two-col {
+        display: grid;
+        grid-template-columns: 1fr 1.5fr;
+        gap: 24px;
+      }
+      .cv-idiomas {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        font-size: 9.5pt;
+        color: #5a6772;
+      }
+      .cv-idiomas li {
+        margin-bottom: 2px;
+      }
+      .cv-soft {
+        font-size: 9.5pt;
+        color: #5a6772;
+        margin: 0;
+        line-height: 1.45;
+      }
+
+      /* ============ PRINT ============ */
+      @media print {
+        .no-print,
+        .print-bar,
+        .print-trigger,
+        .print-hint {
+          display: none !important;
+        }
+
+        html,
+        body {
+          background: #fff !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          font-size: 9.5pt;
+        }
+
+        .cv {
+          max-width: none;
+          width: 100%;
+          margin: 0;
+          padding: 0;
+          box-shadow: none;
+          background: #fff;
+        }
+
+        /* Solo bloques pequeños evitan cortes */
+        .cv-job,
+        .cv-edu,
+        .cv-skill-group,
+        .cv-job-logros,
+        .cv-cert-list li,
+        .cv-idiomas li,
+        .cv-proyectos li {
+          break-inside: avoid;
+        }
+
+        /* La sección NO evita cortes, para que fluya entre páginas */
+        .cv-section {
+          break-inside: auto;
+        }
+
+        /* La cabecera siempre entera */
+        .cv-header {
+          break-inside: avoid;
+          break-after: avoid;
+        }
+
+        /* Los títulos no quedan huérfanos */
+        .cv-section-title {
+          break-after: avoid;
+        }
+        .cv-job-cargo,
+        .cv-job-inst,
+        .cv-edu-titulo,
+        .cv-edu-inst {
+          break-after: avoid;
+        }
+
+        * {
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+
+        @page {
+          size: A4;
+          margin: 12mm 11mm;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .print-bar {
+          right: 12px;
+          bottom: 12px;
+          max-width: 240px;
+        }
+        .print-hint {
+          font-size: 0.72rem;
+        }
+      }
+    </style>
+  </body>
+</html>

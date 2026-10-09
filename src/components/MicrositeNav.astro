@@ -1,0 +1,176 @@
+---
+interface NavLink {
+  href: string;
+  label: string;
+}
+
+interface Props {
+  nombre: string;
+  links: NavLink[];
+}
+
+const { nombre, links } = Astro.props;
+const pathname = Astro.url.pathname;
+---
+
+<header class="ms-nav-wrap">
+  <nav class="container ms-nav">
+    <a href="/" class="ms-brand" aria-label="Volver al portafolio principal">
+      <span class="ms-brand-a">A113E</span>
+      <span class="ms-brand-dot">.</span>
+      <span class="ms-brand-name">{nombre}</span>
+    </a>
+
+    <button class="ms-toggle" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <ul class="ms-links">
+      {links.map((l) => (
+        <li>
+          <a
+            href={l.href}
+            class={pathname === l.href ? 'active' : ''}
+          >{l.label}</a>
+        </li>
+      ))}
+      <li class="ms-back">
+        <a href="/" aria-label="Volver al inicio">← Portafolio</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<style>
+  .ms-nav-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(248, 247, 245, 0.9);
+    backdrop-filter: saturate(140%) blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .ms-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+  }
+  .ms-brand {
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.15rem;
+    letter-spacing: 0.02em;
+  }
+  .ms-brand-a {
+    color: var(--surface-dark);
+  }
+  .ms-brand-dot {
+    color: var(--micro-acento-suave);
+    margin: 0 2px;
+  }
+  .ms-brand-name {
+    color: var(--micro-acento);
+  }
+  .ms-links {
+    display: flex;
+    gap: var(--space-5);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+  }
+  .ms-links a {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    position: relative;
+    padding: 6px 0;
+    transition: color var(--transition-fast);
+  }
+  .ms-links a:hover,
+  .ms-links a.active {
+    color: var(--surface-dark);
+  }
+  .ms-links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: var(--micro-acento);
+    transition: width 0.25s var(--ease);
+  }
+  .ms-links a:hover::after,
+  .ms-links a.active::after {
+    width: 100%;
+  }
+  .ms-back a {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    opacity: 0.85;
+  }
+  .ms-back a:hover {
+    color: var(--micro-acento);
+  }
+
+  .ms-toggle {
+    display: none;
+    background: none;
+    border: 0;
+    padding: var(--space-2);
+    flex-direction: column;
+    gap: 5px;
+  }
+  .ms-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--surface-dark);
+  }
+
+  @media (max-width: 720px) {
+    .ms-toggle { display: flex; }
+    .ms-links {
+      position: absolute;
+      top: 72px;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      gap: 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: var(--space-2) var(--space-4) var(--space-4);
+      transform: translateY(-8px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-fast), transform var(--transition-fast);
+    }
+    .ms-links.open {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .ms-links a {
+      display: block;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .ms-back a {
+      border-bottom: 0;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector('.ms-toggle');
+  const links = document.querySelector('.ms-links');
+  toggle?.addEventListener('click', () => {
+    const open = links?.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(!!open));
+  });
+</script>

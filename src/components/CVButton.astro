@@ -1,0 +1,27 @@
+---
+interface Props {
+  href: string;
+  label?: string;
+  variant?: 'primary' | 'ghost' | 'accent';
+  arrow?: boolean;
+}
+
+const {
+  href,
+  label = 'Descargar CV',
+  variant = 'primary',
+  arrow = true,
+} = Astro.props;
+
+// Solo `download` si el href apunta a un archivo real, no a una página.
+const isFile = /\.(pdf|docx?|odt)$/i.test(href);
+---
+
+<a
+  href={href}
+  class={`btn btn-${variant}`}
+  download={isFile ? '' : undefined}
+>
+  {label}
+  {arrow && <span aria-hidden="true">↓</span>}
+</a>
