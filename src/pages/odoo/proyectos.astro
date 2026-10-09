@@ -1,0 +1,532 @@
+---
+import MicrositeLayout from '../../layouts/MicrositeLayout.astro';
+import FloatingCV from '../../components/FloatingCV.astro';
+import Icon from '../../components/Icon.astro';
+import { perfil, proyectos } from '../../data/odoo';
+
+const navLinks = [
+  { href: '/odoo', label: 'Portada' },
+  { href: '/odoo/proyectos', label: 'Proyectos' },
+  { href: '/odoo/trayectoria', label: 'Trayectoria' },
+  { href: '/odoo/stack', label: 'Stack' },
+  { href: '/odoo/formacion', label: 'Formación' },
+];
+---
+
+<MicrositeLayout
+  nombre="Odoo"
+  acento="#714B67"
+  acentoSuave="#C68A3E"
+  navLinks={navLinks}
+  title="Proyectos — Alberto M. · Desarrollo Odoo"
+  description="Casos de estudio de proyectos Odoo en producción: FEVEXPO, ICS, Informática 2026, FitCuba 2026 y AgroCiencias 2026."
+>
+  <section class="page-head">
+    <div class="container">
+      <span class="head-eyebrow">Casos de estudio</span>
+      <h1 class="display head-title">
+        Proyectos<span class="head-dot">.</span>
+      </h1>
+      <p class="head-desc">
+        Plataformas en producción en las que he participado. Cada ficha
+        describe el contexto de negocio, mi rol específico, los módulos
+        desarrollados o modificados y el stack técnico empleado.
+      </p>
+
+      <ul class="page-nav">
+        {proyectos.map((p) => (
+          <li>
+            <a href={`#${p.id}`}>{p.nombre}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="proyectos-section">
+    <div class="container">
+      {proyectos.map((p) => (
+        <article class="proyecto" id={p.id}>
+          <!-- Cabecera del proyecto -->
+          <header class="proyecto-header">
+            <div class="proyecto-logo">
+              <img src={p.logo} alt={`Logo de ${p.nombre}`} />
+            </div>
+            <div class="proyecto-header-info">
+              <span class="proyecto-estado">{p.estado}</span>
+              <h2 class="proyecto-nombre display">{p.nombre}</h2>
+              <p class="proyecto-tagline">{p.tagline}</p>
+              <div class="proyecto-meta">
+                <span class="proyecto-meta-item">
+                  <Icon name="calendar" size={14} stroke={1.8} />
+                  {p.periodo}
+                </span>
+                <span class="proyecto-meta-item">
+                  <Icon name="users" size={14} stroke={1.8} />
+                  {p.cliente}
+                </span>
+                {p.contactoCliente && (
+                  <span class="proyecto-meta-item proyecto-meta-contacto">
+                    <Icon name="external-link" size={14} stroke={1.8} />
+                    Contacto directo con cliente
+                  </span>
+                )}
+              </div>
+            </div>
+          </header>
+
+          <!-- Rol y versiones -->
+          <div class="proyecto-rol">
+            <div class="rol-bloque">
+              <span class="rol-label">Mi rol</span>
+              <span class="rol-value">{p.rol}</span>
+            </div>
+            <div class="rol-bloque">
+              <span class="rol-label">Versiones</span>
+              <div class="rol-versiones">
+                {p.versiones.map((v) => <span>{v}</span>)}
+              </div>
+            </div>
+          </div>
+
+          <!-- Contexto -->
+          <div class="proyecto-block">
+            <h3 class="block-title">
+              <span class="block-marker"></span>
+              Contexto
+            </h3>
+            <p class="block-text">{p.contexto}</p>
+          </div>
+
+          <!-- Aportes -->
+          <div class="proyecto-block">
+            <h3 class="block-title">
+              <span class="block-marker block-marker-accent"></span>
+              Aportes
+            </h3>
+            {p.aportes.map((aporte) => (
+              <div class="aporte">
+                <h4 class="aporte-titulo">{aporte.titulo}</h4>
+                <ul class="aporte-lista">
+                  {aporte.items.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <!-- Stack -->
+          <div class="proyecto-block">
+            <h3 class="block-title">
+              <span class="block-marker"></span>
+              Stack técnico
+            </h3>
+            <ul class="stack-tags">
+              {p.stack.map((s) => <li>{s}</li>)}
+            </ul>
+          </div>
+
+          <!-- Footer del proyecto -->
+          <footer class="proyecto-footer">
+  <div class="proyecto-links">
+    {p.linkWeb && (
+      <a
+        href={p.linkWeb}
+        class="proyecto-link proyecto-link-web"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Icon name="external-link" size={16} stroke={2} />
+        Ver sitio en vivo
+      </a>
+    )}
+    <a
+      href={p.linkGithub}
+      class="proyecto-link proyecto-link-github"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <Icon name="github" size={16} stroke={2} />
+      Repositorios
+    </a>
+  </div>
+  {p.eventos.length > 0 && (
+    <div class="proyecto-eventos">
+      <span class="eventos-label">Eventos:</span>
+      {p.eventos.map((e) => <span class="evento-tag">{e}</span>)}
+    </div>
+  )}
+</footer>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <FloatingCV href={perfil.cv} label="Descargar CV" />
+</MicrositeLayout>
+
+<style>
+  /* ---------- CABECERA ---------- */
+  .page-head { padding: var(--space-7) 0 var(--space-5); }
+  .head-eyebrow {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--micro-acento-suave);
+    margin-bottom: var(--space-3);
+  }
+  .head-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    margin: 0 0 var(--space-3);
+    color: var(--surface-dark);
+  }
+  .head-dot { color: var(--micro-acento-suave); }
+  .head-desc {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    max-width: 720px;
+    margin: 0 0 var(--space-5);
+  }
+
+  .page-nav {
+    list-style: none;
+    padding: var(--space-4) 0 0;
+    margin: 0;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+  .page-nav a {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    padding: 6px 14px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--border);
+    transition: all var(--transition-fast);
+  }
+  .page-nav a:hover {
+    color: var(--surface-dark);
+    border-color: var(--micro-acento);
+    background: rgba(113, 75, 103, 0.04);
+  }
+
+  /* ---------- PROYECTOS ---------- */
+  .proyectos-section { padding: var(--space-5) 0 var(--space-8); }
+
+  .proyecto {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    margin-bottom: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    scroll-margin-top: 100px;
+    position: relative;
+    overflow: hidden;
+  }
+  .proyecto::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--micro-acento), var(--micro-acento-suave));
+  }
+  .proyecto:last-child { margin-bottom: 0; }
+
+  /* Cabecera */
+  .proyecto-header {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: var(--space-5);
+    align-items: start;
+    padding-bottom: var(--space-4);
+    border-bottom: 1px dashed var(--border);
+  }
+  .proyecto-logo {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px;
+  }
+  .proyecto-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  .proyecto-header-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+  .proyecto-estado {
+    align-self: flex-start;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    background: var(--micro-acento);
+    color: var(--text-inverse);
+  }
+  .proyecto-nombre {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    margin: var(--space-2) 0 4px;
+    color: var(--surface-dark);
+    line-height: 1.15;
+  }
+  .proyecto-tagline {
+    font-size: 1rem;
+    color: var(--micro-acento);
+    font-weight: 600;
+    margin: 0 0 var(--space-3);
+  }
+  .proyecto-meta {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+  .proyecto-meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .proyecto-meta-contacto {
+    color: var(--micro-acento-suave);
+    font-weight: 600;
+  }
+
+  /* Rol */
+  .proyecto-rol {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--space-4);
+    padding: var(--space-4);
+    background: rgba(113, 75, 103, 0.04);
+    border-radius: var(--radius);
+    border-left: 3px solid var(--micro-acento);
+  }
+  .rol-bloque {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .rol-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .rol-value {
+    font-size: 0.98rem;
+    color: var(--surface-dark);
+    font-weight: 600;
+  }
+  .rol-versiones {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .rol-versiones span {
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 4px 11px;
+    border-radius: var(--radius-pill);
+    background: var(--bg-elevated);
+    color: var(--micro-acento);
+    border: 1px solid rgba(113, 75, 103, 0.15);
+  }
+
+  /* Bloques */
+  .proyecto-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .block-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--micro-acento);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .block-marker {
+    display: inline-block;
+    width: 18px;
+    height: 2px;
+    background: var(--micro-acento);
+    border-radius: 2px;
+  }
+  .block-marker-accent { background: var(--micro-acento-suave); }
+  .block-text {
+    font-size: 0.98rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  /* Aportes */
+  .aporte {
+    padding-left: var(--space-3);
+    border-left: 2px solid rgba(113, 75, 103, 0.15);
+  }
+  .aporte-titulo {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--surface-dark);
+    margin: 0 0 var(--space-2);
+    letter-spacing: 0.02em;
+  }
+  .aporte-lista {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .aporte-lista li {
+    font-size: 0.94rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    padding-left: 16px;
+    position: relative;
+  }
+  .aporte-lista li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--micro-acento-suave);
+    font-weight: 700;
+    top: 0;
+  }
+  .aporte-lista li strong {
+    color: var(--surface-dark);
+  }
+
+  /* Stack */
+  .stack-tags {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .stack-tags li {
+    font-size: 0.82rem;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: var(--radius-pill);
+    background: rgba(113, 75, 103, 0.06);
+    color: var(--micro-acento);
+    border: 1px solid rgba(113, 75, 103, 0.12);
+  }
+
+/* Footer */
+.proyecto-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px dashed var(--border);
+  flex-wrap: wrap;
+}
+
+.proyecto-links {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.proyecto-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: var(--radius-pill);
+  transition: all var(--transition-fast);
+}
+
+/* Botón principal: sitio en vivo */
+.proyecto-link-web {
+  background: var(--micro-acento);
+  color: var(--text-inverse);
+  border: 1px solid var(--micro-acento);
+}
+.proyecto-link-web:hover {
+  background: var(--micro-acento-suave);
+  border-color: var(--micro-acento-suave);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Botón secundario: GitHub */
+.proyecto-link-github {
+  background: transparent;
+  color: var(--micro-acento);
+  border: 1px solid rgba(113, 75, 103, 0.2);
+}
+.proyecto-link-github:hover {
+  background: rgba(113, 75, 103, 0.06);
+  border-color: var(--micro-acento);
+  transform: translateY(-2px);
+}
+
+.proyecto-eventos {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.eventos-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.evento-tag {
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--bg);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .proyecto { padding: var(--space-4); }
+    .proyecto-header { grid-template-columns: 72px 1fr; gap: var(--space-3); }
+    .proyecto-logo { width: 72px; height: 72px; padding: 8px; }
+    .proyecto-rol { grid-template-columns: 1fr; }
+    .proyecto-footer { flex-direction: column; align-items: flex-start; }
+  .proyecto-links { width: 100%; }
+  .proyecto-link { flex: 1; justify-content: center; }
+  }
+</style>

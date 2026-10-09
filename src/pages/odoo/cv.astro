@@ -3,31 +3,35 @@ import CVLayout from '../../layouts/CVLayout.astro';
 import Icon from '../../components/Icon.astro';
 import {
   perfil,
+  proyectos,
   trayectoria,
-  habilidades,
-  titulosOficiales,
+  stack,
+  formacion,
   certificaciones,
-  formacionComplementaria,
   softSkills,
   idiomas,
-} from '../../data/documental';
-
-const habilidadesPlanas = habilidades.categorias.map((cat) => ({
-  categoria: cat.titulo,
-  items: cat.items.map((i) => i.nombre),
-}));
+} from '../../data/odoo';
 
 const contacto = [
   { icono: 'email', valor: perfil.email },
-  { icono: 'telefono', valor: '+53 5 8426686' },
+  { icono: 'telefono', valor: perfil.telefono },
   { icono: 'ubicacion', valor: perfil.ubicacion },
-  { icono: 'linkedin', valor: 'linkedin.com/in/alberto-gonzalez-9b4777339' },
-  { icono: 'github', valor: 'github.com/A113E' },
+  { icono: 'github', valor: perfil.github },
+  { icono: 'linkedin', valor: perfil.linkedin },
 ];
+
+const stackPlano = stack.categorias.map((c) => ({
+  categoria: c.titulo,
+  items: c.items.map((i) => `${i.nombre} (${i.nivel})`),
+}));
+
+const totalModulos = proyectos.reduce((acc, p) => {
+  return acc + p.aportes.flatMap((a) => a.items.filter((i) => i.includes('—'))).length;
+}, 0);
 ---
 
-<CVLayout title="CV — Alberto Adrián Mártir González · Gestión Documental">
-  <!-- ============ CABECERA ============ -->
+<CVLayout title="CV — Alberto Adrián Mártir González · Desarrollo Odoo">
+  <!-- CABECERA -->
   <header class="cv-header">
     <div class="cv-photo">
       <img src="/img/albe.png" alt="Foto de perfil de Alberto M." />
@@ -46,13 +50,38 @@ const contacto = [
     </ul>
   </header>
 
-  <!-- ============ PERFIL ============ -->
+  <!-- PERFIL -->
   <section class="cv-section">
     <h2 class="cv-section-title">Perfil profesional</h2>
     <p class="cv-summary">{perfil.resumen}</p>
   </section>
 
-  <!-- ============ EXPERIENCIA ============ -->
+  <!-- PROYECTOS DESTACADOS -->
+  <section class="cv-section">
+    <h2 class="cv-section-title">Proyectos destacados</h2>
+    {proyectos.map((p) => (
+      <article class="cv-job">
+        <header class="cv-job-head">
+          <div>
+            <h3 class="cv-job-cargo">{p.nombre}</h3>
+            <p class="cv-job-inst">{p.tagline} · {p.cliente}</p>
+          </div>
+          <span class="cv-job-periodo">{p.periodo}</span>
+        </header>
+        <p class="cv-job-rol"><strong>Rol:</strong> {p.rol} · <strong>Stack:</strong> {p.versiones.join(', ')}</p>
+        {p.aportes.map((a) => (
+          <div class="cv-aporte">
+            <h4 class="cv-aporte-titulo">{a.titulo}</h4>
+            <ul class="cv-job-funciones">
+              {a.items.map((i) => <li>{i}</li>)}
+            </ul>
+          </div>
+        ))}
+      </article>
+    ))}
+  </section>
+
+  <!-- EXPERIENCIA -->
   <section class="cv-section">
     <h2 class="cv-section-title">Experiencia profesional</h2>
     {trayectoria.map((t) => (
@@ -76,52 +105,47 @@ const contacto = [
     ))}
   </section>
 
-  <!-- ============ HABILIDADES ============ -->
+  <!-- STACK -->
   <section class="cv-section">
-    <h2 class="cv-section-title">Habilidades técnicas</h2>
+    <h2 class="cv-section-title">Stack técnico</h2>
     <div class="cv-skills-grid">
-      {habilidadesPlanas.map((h) => (
+      {stackPlano.map((s) => (
         <div class="cv-skill-group">
-          <h3 class="cv-skill-cat">{h.categoria}</h3>
-          <p class="cv-skill-list">{h.items.join(' · ')}</p>
+          <h3 class="cv-skill-cat">{s.categoria}</h3>
+          <p class="cv-skill-list">{s.items.join(' · ')}</p>
         </div>
       ))}
     </div>
   </section>
 
-  <!-- ============ FORMACIÓN ============ -->
+  <!-- FORMACIÓN -->
   <section class="cv-section">
     <h2 class="cv-section-title">Formación</h2>
-    <div class="cv-edu-block">
-      {titulosOficiales.map((t) => (
-        <article class="cv-edu">
-          <header class="cv-edu-head">
-            <div>
-              <h3 class="cv-edu-titulo">{t.titulo}</h3>
-              <p class="cv-edu-inst">{t.institucion} · {t.ubicacion}</p>
-            </div>
-            <span class="cv-edu-periodo">{t.periodo}</span>
-          </header>
-          {t.destacado && <p class="cv-edu-destacado">{t.destacado}</p>}
-        </article>
-      ))}
-    </div>
+    {formacion.map((f) => (
+      <article class="cv-edu">
+        <header class="cv-edu-head">
+          <div>
+            <h3 class="cv-edu-titulo">{f.titulo}</h3>
+            <p class="cv-edu-inst">{f.institucion}</p>
+          </div>
+          <span class="cv-edu-periodo">{f.periodo}</span>
+        </header>
+        {f.destacado && <p class="cv-edu-destacado">{f.destacado}</p>}
+      </article>
+    ))}
     <div class="cv-cert-block">
-      <h3 class="cv-subtitle">Certificaciones y formación continua</h3>
+      <h3 class="cv-subtitle">Certificaciones</h3>
       <ul class="cv-cert-list">
         {certificaciones.map((c) => (
           <li>
             <strong>{c.titulo}</strong> — {c.institucion} ({c.periodo})
           </li>
         ))}
-        <li>
-          <strong>Formación complementaria:</strong> {formacionComplementaria.join(' · ')}
-        </li>
       </ul>
     </div>
   </section>
 
-  <!-- ============ IDIOMAS Y SOFT SKILLS ============ -->
+  <!-- IDIOMAS Y SOFT SKILLS -->
   <section class="cv-section cv-section-final">
     <div class="cv-two-col">
       <div>

@@ -1,0 +1,412 @@
+---
+import MicrositeLayout from '../../layouts/MicrositeLayout.astro';
+import FloatingCV from '../../components/FloatingCV.astro';
+import Icon from '../../components/Icon.astro';
+import { perfil, proyectos, stack } from '../../data/odoo';
+
+const navLinks = [
+  { href: '/odoo', label: 'Portada' },
+  { href: '/odoo/proyectos', label: 'Proyectos' },
+  { href: '/odoo/trayectoria', label: 'Trayectoria' },
+  { href: '/odoo/stack', label: 'Stack' },
+  { href: '/odoo/formacion', label: 'Formación' },
+];
+
+const totalModulos = proyectos.reduce((acc, p) => {
+  const aportes = p.aportes.flatMap((a) => a.items);
+  return acc + aportes.filter((i) => i.includes('—')).length;
+}, 0);
+
+const stats = [
+  { valor: proyectos.length, label: 'proyectos en producción' },
+  { valor: '8+', label: 'módulos propios' },
+  { valor: '3', label: 'versiones de Odoo' },
+  { valor: '4+', label: 'años en desarrollo' },
+];
+
+const subsecciones = [
+  { numero: '01', href: '/odoo/proyectos', titulo: 'Proyectos', descripcion: 'Casos de estudio con contexto, rol, stack y enlaces al código.', icono: 'folder' },
+  { numero: '02', href: '/odoo/trayectoria', titulo: 'Trayectoria', descripcion: 'Experiencia profesional completa.', icono: 'compass' },
+  { numero: '03', href: '/odoo/stack', titulo: 'Stack técnico', descripcion: 'Tecnologías y herramientas que domino.', icono: 'terminal' },
+  { numero: '04', href: '/odoo/formacion', titulo: 'Formación', descripcion: 'Títulos y certificaciones.', icono: 'award' },
+];
+---
+
+<MicrositeLayout
+  nombre="Odoo"
+  acento="#714B67"
+  acentoSuave="#C68A3E"
+  navLinks={navLinks}
+  title="Desarrollo Odoo — Alberto Adrián Mártir González"
+  description="Desarrollador Odoo especializado en módulos personalizados, migraciones entre versiones y despliegues con Docker y Doodba."
+>
+  <!-- HERO PITCH -->
+  <section class="pitch">
+    <div class="container">
+      <span class="pitch-kicker">Desarrollador Odoo · Python · Full Stack</span>
+      <h1 class="display pitch-title">
+        Construyo módulos que<br />
+        <span class="pitch-highlight">resuelven problemas reales</span><span class="pitch-dot">.</span>
+      </h1>
+      <p class="pitch-desc">{perfil.resumen}</p>
+
+      <div class="pitch-actions">
+        <a href="/odoo/proyectos" class="btn-pitch-primary">
+          Ver proyectos →
+        </a>
+        <a href={perfil.github} class="btn-pitch-ghost" target="_blank" rel="noopener noreferrer">
+          <Icon name="github" size={16} stroke={2} />
+          GitHub
+        </a>
+        <a href={perfil.cv} class="btn-pitch-ghost">
+          Ver CV ↓
+        </a>
+      </div>
+
+      <ul class="pitch-stats">
+        {stats.map((s) => (
+          <li>
+            <strong>{s.valor}</strong>
+            <span>{s.label}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- SUBSECCIONES -->
+  <section class="subsecciones">
+    <div class="container">
+      <header class="sub-head">
+        <span class="sub-eyebrow">Explora</span>
+        <h2 class="display sub-title">
+          Cuatro miradas al trabajo<span class="pitch-dot">.</span>
+        </h2>
+      </header>
+
+      <div class="tabs">
+        {subsecciones.map((s) => (
+          <a href={s.href} class="tab">
+            <div class="tab-top">
+              <span class="tab-icon">
+                <Icon name={s.icono} size={22} stroke={1.7} />
+              </span>
+              <span class="tab-num">{s.numero}</span>
+            </div>
+            <h3 class="tab-title display">{s.titulo}</h3>
+            <p class="tab-desc">{s.descripcion}</p>
+            <span class="tab-arrow" aria-hidden="true">→</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PROYECTOS DESTACADOS -->
+  <section class="destacados">
+    <div class="container">
+      <header class="sub-head">
+        <span class="sub-eyebrow">Proyectos destacados</span>
+        <h2 class="display sub-title">
+          En producción<span class="pitch-dot">.</span>
+        </h2>
+        <p class="sub-desc">
+          Plataformas activas en las que he participado, con responsabilidad sobre módulos y contacto con cliente.
+        </p>
+      </header>
+
+      <div class="proyectos-grid">
+        {proyectos.slice(0, 3).map((p) => (
+          <a href={`/odoo/proyectos#${p.id}`} class="proyecto-mini">
+            <div class="proyecto-mini-logo">
+              <img src={p.logo} alt={p.nombre} />
+            </div>
+            <div class="proyecto-mini-body">
+              <span class="proyecto-mini-estado">{p.estado}</span>
+              <h3 class="proyecto-mini-nombre display">{p.nombre}</h3>
+              <p class="proyecto-mini-tagline">{p.tagline}</p>
+              <div class="proyecto-mini-versiones">
+                {p.versiones.map((v) => <span>{v}</span>)}
+              </div>
+            </div>
+            <span class="proyecto-mini-arrow" aria-hidden="true">→</span>
+          </a>
+        ))}
+      </div>
+
+      <a href="/odoo/proyectos" class="ver-todos">
+        Ver todos los proyectos <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+
+  <FloatingCV href={perfil.cv} label="Descargar CV" />
+</MicrositeLayout>
+
+<style>
+  /* PITCH HERO */
+  .pitch {
+    padding: var(--space-8) 0 var(--space-6);
+    background: linear-gradient(180deg, rgba(113, 75, 103, 0.05), transparent);
+    border-bottom: 1px solid var(--border);
+  }
+  .pitch-kicker {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--micro-acento-suave);
+    margin-bottom: var(--space-4);
+  }
+  .pitch-title {
+    font-size: clamp(2.4rem, 5.5vw, 4.4rem);
+    margin: 0 0 var(--space-4);
+    color: var(--surface-dark);
+    line-height: 1.1;
+    max-width: 900px;
+  }
+  .pitch-highlight {
+    color: var(--micro-acento);
+    font-style: italic;
+  }
+  .pitch-dot { color: var(--micro-acento-suave); }
+  .pitch-desc {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    margin: 0 0 var(--space-5);
+    max-width: 720px;
+    line-height: 1.6;
+  }
+  .pitch-actions {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-6);
+  }
+  .btn-pitch-primary,
+  .btn-pitch-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 22px;
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  }
+  .btn-pitch-primary {
+    background: var(--micro-acento);
+    color: var(--text-inverse);
+  }
+  .btn-pitch-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .btn-pitch-ghost {
+    background: transparent;
+    color: var(--surface-dark);
+    border: 1px solid var(--border);
+  }
+  .btn-pitch-ghost:hover { border-color: var(--surface-dark); transform: translateY(-2px); }
+
+  .pitch-stats {
+    list-style: none;
+    padding: var(--space-4) 0 0;
+    margin: 0;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: var(--space-6);
+    flex-wrap: wrap;
+  }
+  .pitch-stats li {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .pitch-stats strong {
+    font-family: var(--font-display);
+    font-size: 1.9rem;
+    font-weight: 600;
+    color: var(--micro-acento);
+    line-height: 1;
+  }
+  .pitch-stats span {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  /* SUBSECCIONES */
+  .subsecciones { padding: var(--space-7) 0; }
+  .sub-head { max-width: 720px; margin-bottom: var(--space-5); }
+  .sub-eyebrow {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--micro-acento-suave);
+    margin-bottom: var(--space-2);
+  }
+  .sub-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin: 0 0 var(--space-2);
+    color: var(--surface-dark);
+  }
+  .sub-desc { color: var(--text-muted); margin: 0; }
+
+  .tabs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+  .tab {
+    position: relative;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    overflow: hidden;
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+  }
+  .tab::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    height: 3px;
+    background: var(--micro-acento);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease);
+  }
+  .tab:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+  .tab:hover::before { transform: scaleX(1); }
+  .tab-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .tab-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    background: rgba(113, 75, 103, 0.1);
+    color: var(--micro-acento);
+  }
+  .tab-num {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--micro-acento-suave);
+  }
+  .tab-title { font-size: 1.4rem; margin: 0; color: var(--surface-dark); }
+  .tab-desc { font-size: 0.92rem; color: var(--text-muted); margin: 0; flex-grow: 1; }
+  .tab-arrow {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    transition: transform var(--transition-base), color var(--transition-base);
+  }
+  .tab:hover .tab-arrow { transform: translateX(6px); color: var(--micro-acento); }
+
+  /* DESTACADOS */
+  .destacados {
+    padding: var(--space-7) 0 var(--space-8);
+    background: rgba(113, 75, 103, 0.03);
+    border-top: 1px solid var(--border);
+  }
+  .proyectos-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+    margin-bottom: var(--space-5);
+  }
+  .proyecto-mini {
+    display: grid;
+    grid-template-columns: 72px 1fr auto;
+    gap: var(--space-4);
+    align-items: center;
+    padding: var(--space-4) var(--space-5);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+  }
+  .proyecto-mini:hover {
+    transform: translateX(4px);
+    box-shadow: var(--shadow-md);
+  }
+  .proyecto-mini-logo {
+    width: 72px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    padding: 8px;
+    border: 1px solid var(--border);
+  }
+  .proyecto-mini-logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .proyecto-mini-estado {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--micro-acento);
+  }
+  .proyecto-mini-nombre {
+    font-size: 1.2rem;
+    margin: 2px 0;
+    color: var(--surface-dark);
+  }
+  .proyecto-mini-tagline {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin: 0 0 6px;
+  }
+  .proyecto-mini-versiones {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .proyecto-mini-versiones span {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: var(--radius-pill);
+    background: rgba(113, 75, 103, 0.08);
+    color: var(--micro-acento);
+  }
+  .proyecto-mini-arrow {
+    font-size: 1.4rem;
+    color: var(--text-muted);
+    transition: transform var(--transition-base), color var(--transition-base);
+  }
+  .proyecto-mini:hover .proyecto-mini-arrow {
+    transform: translateX(6px);
+    color: var(--micro-acento);
+  }
+
+  .ver-todos {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    color: var(--micro-acento);
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
+    transition: color var(--transition-fast);
+  }
+  .ver-todos:hover { color: var(--micro-acento-suave); }
+
+  @media (max-width: 900px) {
+    .tabs { grid-template-columns: 1fr; }
+    .proyecto-mini { grid-template-columns: 56px 1fr auto; gap: var(--space-3); padding: var(--space-4); }
+    .proyecto-mini-logo { width: 56px; height: 56px; }
+    .pitch-stats { gap: var(--space-4); }
+  }
+</style>

@@ -1,0 +1,258 @@
+---
+import MicrositeLayout from '../../layouts/MicrositeLayout.astro';
+import FloatingCV from '../../components/FloatingCV.astro';
+import { perfil, stack } from '../../data/odoo';
+
+const navLinks = [
+  { href: '/odoo', label: 'Portada' },
+  { href: '/odoo/proyectos', label: 'Proyectos' },
+  { href: '/odoo/trayectoria', label: 'Trayectoria' },
+  { href: '/odoo/stack', label: 'Stack' },
+  { href: '/odoo/formacion', label: 'Formación' },
+];
+
+const nivelToPuntos = (nivel: string) => {
+  if (nivel === 'avanzado') return 3;
+  if (nivel === 'intermedio') return 2;
+  return 1;
+};
+
+const totalItems = stack.categorias.reduce((acc, c) => acc + c.items.length, 0);
+const totalAvanzado = stack.categorias.reduce(
+  (acc, c) => acc + c.items.filter((i) => i.nivel === 'avanzado').length,
+  0,
+);
+---
+
+<MicrositeLayout
+  nombre="Odoo"
+  acento="#714B67"
+  acentoSuave="#C68A3E"
+  navLinks={navLinks}
+  title="Stack técnico — Alberto M. · Desarrollo Odoo"
+  description="Tecnologías, lenguajes, frameworks y herramientas que domino, con nivel de experiencia."
+>
+  <section class="page-head">
+    <div class="container">
+      <span class="head-eyebrow">Sección 03</span>
+      <h1 class="display head-title">
+        Stack técnico<span class="head-dot">.</span>
+      </h1>
+      <p class="head-desc">
+        Tecnologías que uso a diario. Los niveles reflejan experiencia real en
+        proyectos en producción: <strong>avanzado</strong> (uso diario y
+        resolución de problemas complejos), <strong>intermedio</strong>
+        (experiencia sólida en proyectos reales) y <strong>básico</strong>
+        (formación y uso puntual).
+      </p>
+
+      <ul class="stats">
+        <li><strong>{stack.categorias.length}</strong> <span>categorías</span></li>
+        <li><strong>{totalItems}</strong> <span>tecnologías</span></li>
+        <li><strong>{totalAvanzado}</strong> <span>a nivel avanzado</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="stack-section">
+    <div class="container">
+      <div class="stack-categorias">
+        {stack.categorias.map((cat) => (
+          <article class="categoria" style={`--cat-color: ${cat.color};`}>
+            <header class="categoria-head">
+              <h2 class="categoria-titulo display">{cat.titulo}</h2>
+              <p class="categoria-desc">{cat.descripcion}</p>
+            </header>
+
+            <ul class="categoria-items">
+              {cat.items.map((item) => (
+                <li class="item">
+                  <span class="item-nombre">{item.nombre}</span>
+                  <span
+                    class={`item-nivel item-nivel-${item.nivel}`}
+                    role="img"
+                    aria-label={`Nivel ${item.nivel}`}
+                  >
+                    <span class="nivel-punto"></span>
+                    <span class="nivel-punto"></span>
+                    <span class="nivel-punto"></span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+
+      <div class="leyenda">
+        <span class="leyenda-item">
+          <span class="leyenda-puntos"><span></span><span></span><span></span></span>
+          <span class="leyenda-label">Avanzado</span>
+        </span>
+        <span class="leyenda-item">
+          <span class="leyenda-puntos"><span></span><span></span></span>
+          <span class="leyenda-label">Intermedio</span>
+        </span>
+        <span class="leyenda-item">
+          <span class="leyenda-puntos"><span></span></span>
+          <span class="leyenda-label">Básico</span>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <FloatingCV href={perfil.cv} label="Descargar CV" />
+</MicrositeLayout>
+
+<style>
+  .page-head { padding: var(--space-7) 0 var(--space-5); }
+  .head-eyebrow {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--micro-acento-suave);
+    margin-bottom: var(--space-3);
+  }
+  .head-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    margin: 0 0 var(--space-3);
+    color: var(--surface-dark);
+  }
+  .head-dot { color: var(--micro-acento-suave); }
+  .head-desc {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    max-width: 720px;
+    margin: 0 0 var(--space-5);
+    line-height: 1.6;
+  }
+  .head-desc strong { color: var(--surface-dark); }
+
+  .stats {
+    list-style: none;
+    padding: var(--space-4) 0 0;
+    margin: 0;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: var(--space-6);
+    flex-wrap: wrap;
+  }
+  .stats li { display: flex; flex-direction: column; gap: 2px; }
+  .stats strong {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--micro-acento);
+    line-height: 1;
+  }
+  .stats span { font-size: 0.78rem; color: var(--text-muted); }
+
+  .stack-section { padding: var(--space-5) 0 var(--space-8); }
+  .stack-categorias {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+  .categoria {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--cat-color);
+    border-radius: var(--radius);
+    padding: var(--space-5);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+  }
+  .categoria:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+  }
+  .categoria-head {
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px dashed var(--border);
+  }
+  .categoria-titulo {
+    font-size: 1.35rem;
+    margin: 0 0 4px;
+    color: var(--surface-dark);
+  }
+  .categoria-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0;
+  }
+  .categoria-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-3);
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    transition: background var(--transition-fast);
+  }
+  .item:hover { background: var(--bg); }
+  .item-nombre {
+    font-size: 0.94rem;
+    color: var(--surface-dark);
+    font-weight: 500;
+  }
+  .item-nivel {
+    display: inline-flex;
+    gap: 3px;
+    flex-shrink: 0;
+  }
+  .nivel-punto {
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+  }
+  .item-nivel-avanzado .nivel-punto { background: var(--micro-acento); }
+  .item-nivel-intermedio .nivel-punto:nth-child(-n+2) { background: var(--micro-acento-suave); }
+  .item-nivel-intermedio .nivel-punto:nth-child(3) { background: var(--border); }
+  .item-nivel-basico .nivel-punto:nth-child(1) { background: rgba(198, 138, 62, 0.5); }
+  .item-nivel-basico .nivel-punto:nth-child(n+2) { background: var(--border); }
+
+  .leyenda {
+    display: flex;
+    gap: var(--space-5);
+    flex-wrap: wrap;
+    margin-top: var(--space-5);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--border);
+  }
+  .leyenda-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+  .leyenda-puntos {
+    display: inline-flex;
+    gap: 3px;
+  }
+  .leyenda-puntos span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--micro-acento);
+  }
+  .leyenda-item:nth-child(2) .leyenda-puntos span:nth-child(3) { background: var(--border); }
+  .leyenda-item:nth-child(3) .leyenda-puntos span:nth-child(n+2) { background: var(--border); }
+
+  @media (max-width: 900px) {
+    .stack-categorias { grid-template-columns: 1fr; }
+    .stats { gap: var(--space-4); }
+  }
+</style>

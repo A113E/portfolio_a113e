@@ -221,6 +221,25 @@ const { title } = Astro.props;
         padding-bottom: 12px;
         border-bottom: 1px dashed #e5e2dc;
       }
+      .cv-job-rol {
+        font-size: 9pt;
+        color: #5a6772;
+        margin: 0 0 6px;
+        line-height: 1.4;
+        }
+    .cv-job-rol strong { color: #1e2a38; }
+
+    .cv-aporte {
+        margin-bottom: 6px;
+    }
+    .cv-aporte:last-child { margin-bottom: 0; }
+
+    .cv-aporte-titulo {
+        font-size: 9pt;
+        font-weight: 700;
+        color: #b87333;
+        margin: 0 0 2px;
+    }
       .cv-job:last-child {
         margin-bottom: 0;
         padding-bottom: 0;
@@ -438,11 +457,16 @@ const { title } = Astro.props;
         }
 
         /* Solo bloques pequeños evitan cortes */
-        .cv-job,
+        .cv-job {
+            break-inside: auto
+        }, 
         .cv-edu,
         .cv-skill-group,
         .cv-job-logros,
         .cv-cert-list li,
+        .cv-job-head {
+            break-inside: avoid
+        },
         .cv-idiomas li,
         .cv-proyectos li {
           break-inside: avoid;
@@ -464,6 +488,9 @@ const { title } = Astro.props;
           break-after: avoid;
         }
         .cv-job-cargo,
+        .cv-job-funciones li {
+            break-inside: avoid
+        },
         .cv-job-inst,
         .cv-edu-titulo,
         .cv-edu-inst {

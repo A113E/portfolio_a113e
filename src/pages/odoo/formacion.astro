@@ -1,32 +1,34 @@
 ---
 import MicrositeLayout from '../../layouts/MicrositeLayout.astro';
 import FloatingCV from '../../components/FloatingCV.astro';
-import { perfil, formacion, certificaciones } from '../../data/profesor';
+import Icon from '../../components/Icon.astro';
+import { perfil, formacion, certificaciones } from '../../data/odoo';
 
 const navLinks = [
-  { href: '/profesor', label: 'Portada' },
-  { href: '/profesor/asignaturas', label: 'Asignaturas' },
-  { href: '/profesor/trayectoria', label: 'Trayectoria' },
-  { href: '/profesor/formacion', label: 'Formación' },
+  { href: '/odoo', label: 'Portada' },
+  { href: '/odoo/proyectos', label: 'Proyectos' },
+  { href: '/odoo/trayectoria', label: 'Trayectoria' },
+  { href: '/odoo/stack', label: 'Stack' },
+  { href: '/odoo/formacion', label: 'Formación' },
 ];
 ---
 
 <MicrositeLayout
-  nombre="Profesor"
-  acento="#2D5A4A"
+  nombre="Odoo"
+  acento="#714B67"
   acentoSuave="#C68A3E"
   navLinks={navLinks}
-  title="Formación — Alberto M. · Docencia"
-  description="Títulos oficiales y certificaciones que respaldan la práctica docente."
+  title="Formación — Alberto M. · Desarrollo Odoo"
+  description="Títulos oficiales y certificaciones que respaldan el perfil de desarrollo."
 >
   <section class="page-head">
     <div class="container">
-      <span class="head-eyebrow">Sección 03</span>
+      <span class="head-eyebrow">Sección 04</span>
       <h1 class="display head-title">
-        Formación<span class="pizarra-dot">.</span>
+        Formación<span class="head-dot">.</span>
       </h1>
       <p class="head-desc">
-        Títulos oficiales y certificaciones que respaldan la práctica docente.
+        Títulos oficiales y certificaciones que respaldan el perfil técnico.
       </p>
     </div>
   </section>
@@ -36,7 +38,7 @@ const navLinks = [
       <header class="block-head">
         <span class="block-eyebrow">Formación reglada</span>
         <h2 class="display block-title">
-          Títulos oficiales<span class="pizarra-dot">.</span>
+          Títulos oficiales<span class="head-dot">.</span>
         </h2>
       </header>
 
@@ -46,29 +48,41 @@ const navLinks = [
             <div class="titulo-ribbon"><span>{t.rango}</span></div>
             {t.destacado && (
               <div class="titulo-sello">
+                <Icon name="award" size={16} stroke={2} />
                 <span>{t.destacado}</span>
               </div>
             )}
             <h3 class="titulo-name display">{t.titulo}</h3>
             <p class="titulo-inst">{t.institucion}</p>
             <span class="titulo-periodo">{t.periodo}</span>
+            {t.menciones.length > 0 && (
+              <ul class="titulo-menciones">
+                {t.menciones.map((m) => <li>{m}</li>)}
+              </ul>
+            )}
           </article>
         ))}
       </div>
 
       <header class="block-head block-head-spaced">
-        <span class="block-eyebrow">Formación continua</span>
+        <span class="block-eyebrow">Formación técnica especializada</span>
         <h2 class="display block-title">
-          Certificaciones<span class="pizarra-dot">.</span>
+          Certificaciones<span class="head-dot">.</span>
         </h2>
       </header>
 
       <div class="certs-grid">
         {certificaciones.map((c) => (
           <article class="cert-card">
+            <div class="cert-icon">
+              <Icon name="certificate" size={22} stroke={1.7} />
+            </div>
             <h3 class="cert-name display">{c.titulo}</h3>
             <p class="cert-inst">{c.institucion} · {c.periodo}</p>
             <p class="cert-desc">{c.descripcion}</p>
+            <ul class="cert-tags">
+              {c.tags.map((t) => <li>{t}</li>)}
+            </ul>
           </article>
         ))}
       </div>
@@ -84,7 +98,7 @@ const navLinks = [
     display: inline-block;
     font-size: 0.72rem;
     font-weight: 700;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.24em;
     text-transform: uppercase;
     color: var(--micro-acento-suave);
     margin-bottom: var(--space-3);
@@ -94,7 +108,7 @@ const navLinks = [
     margin: 0 0 var(--space-3);
     color: var(--surface-dark);
   }
-  .pizarra-dot { color: var(--micro-acento-suave); }
+  .head-dot { color: var(--micro-acento-suave); }
   .head-desc {
     font-size: 1.05rem;
     color: var(--text-muted);
@@ -137,10 +151,7 @@ const navLinks = [
     overflow: hidden;
     transition: transform var(--transition-base), box-shadow var(--transition-base);
   }
-  .titulo-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
-  }
+  .titulo-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
   .titulo-ribbon {
     position: absolute;
     top: 0;
@@ -159,6 +170,8 @@ const navLinks = [
   .titulo-sello {
     align-self: flex-start;
     display: inline-flex;
+    align-items: center;
+    gap: 6px;
     padding: 6px 12px;
     background: linear-gradient(135deg, rgba(198, 138, 62, 0.15), rgba(198, 138, 62, 0.05));
     border: 1px solid var(--micro-acento-suave);
@@ -174,56 +187,67 @@ const navLinks = [
     background: linear-gradient(180deg, var(--bg-elevated), rgba(198, 138, 62, 0.03));
     border-color: rgba(198, 138, 62, 0.3);
   }
-  .titulo-name {
-    font-size: 1.5rem;
-    margin: 0;
-    color: var(--surface-dark);
-    line-height: 1.2;
+  .titulo-name { font-size: 1.5rem; margin: 0; color: var(--surface-dark); line-height: 1.2; }
+  .titulo-inst { font-size: 0.95rem; color: var(--micro-acento); font-weight: 600; margin: 0; }
+  .titulo-periodo { font-size: 0.85rem; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+  .titulo-menciones {
+    list-style: none;
+    padding: var(--space-3) 0 0;
+    margin: var(--space-3) 0 0;
+    border-top: 1px dashed var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
-  .titulo-inst {
-    font-size: 0.95rem;
-    color: var(--micro-acento);
-    font-weight: 600;
-    margin: 0;
-  }
-  .titulo-periodo {
-    font-size: 0.85rem;
+  .titulo-menciones li {
+    font-size: 0.88rem;
     color: var(--text-muted);
-    font-variant-numeric: tabular-nums;
+    padding-left: 14px;
+    position: relative;
+  }
+  .titulo-menciones li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--micro-acento-suave);
+    font-weight: 700;
   }
 
-  .certs-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-4);
-  }
+  .certs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
   .cert-card {
     background: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
     transition: transform var(--transition-base), box-shadow var(--transition-base);
   }
-  .cert-card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-md);
-  }
-  .cert-name {
-    font-size: 1.15rem;
-    margin: 0 0 4px;
-    color: var(--surface-dark);
-  }
-  .cert-inst {
-    font-size: 0.88rem;
+  .cert-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+  .cert-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    background: rgba(113, 75, 103, 0.1);
     color: var(--micro-acento);
-    font-weight: 600;
-    margin: 0 0 var(--space-3);
+    margin-bottom: var(--space-2);
   }
-  .cert-desc {
-    font-size: 0.92rem;
-    color: var(--text-muted);
-    margin: 0;
-    line-height: 1.55;
+  .cert-name { font-size: 1.2rem; margin: 0; color: var(--surface-dark); }
+  .cert-inst { font-size: 0.88rem; color: var(--micro-acento); font-weight: 600; margin: 0; }
+  .cert-desc { font-size: 0.92rem; color: var(--text-muted); margin: var(--space-2) 0; line-height: 1.55; }
+  .cert-tags { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+  .cert-tags li {
+    font-size: 0.76rem;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    background: rgba(113, 75, 103, 0.06);
+    color: var(--micro-acento);
+    border: 1px solid rgba(113, 75, 103, 0.12);
   }
 
   @media (max-width: 900px) {
