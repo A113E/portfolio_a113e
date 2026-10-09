@@ -1,5 +1,10 @@
-// @ts-check
+// astro.config.mjs
 import { defineConfig } from 'astro/config';
 
-// https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+  vite: {
+    build: {
+      cssMinify: 'esbuild', // Fuerza el uso de esbuild para minificar CSS
+    },
+  },
+});
