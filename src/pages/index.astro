@@ -1,11 +1,418 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const especialidades = [
+  {
+    href: '/documental',
+    kicker: '01',
+    title: 'Gestión Documental',
+    desc: 'Diseño e implantación de repositorios digitales, metadatos, políticas de archivo y preservación.',
+    tags: ['Contenido', 'Audiovisual', 'Metadatos', 'Archivo', 'Preservación','Organización'],
+  },
+  {
+    href: '/odoo',
+    kicker: '02',
+    title: 'Desarrollo Odoo',
+    desc: 'Módulos personalizados, integraciones y migraciones sobre Odoo en entornos empresariales.',
+    tags: ['Python', 'ORM', 'Integraciones', 'XML', 'Doodba', 'Docker', 'JavaScript', 'CSS', 'Tests', 'Migraciones'],
+  },
+  {
+    href: '/investigador',
+    kicker: '03',
+    title: 'Investigación',
+    desc: 'Publicaciones, proyectos I+D y líneas de trabajo en torno a la información y la tecnología.',
+    tags: ['Publicaciones', 'I+D', 'Datos', 'Proyectos', 'Tesis', 'Blogs', 'Bibliografías', 'Zotero'],
+  },
+  {
+    href: '/profesor',
+    kicker: '04',
+    title: 'Docencia',
+    desc: 'Asignaturas, materiales didácticos y mentoría en formación técnica y universitaria.',
+    tags: ['Formación', 'Materiales', 'Mentoría', 'Asesoría', 'Consultor', 'Paciencia', 'Empatía'],
+  },
+];
+
+const nombre = 'Alberto Adrián Mártir González';
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout>
+  <Nav />
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <!-- marca de agua tipográfica -->
+    <div class="watermark display" aria-hidden="true">A113E</div>
+
+    <div class="container hero-grid">
+      <div class="hero-photo">
+        <div class="photo-frame">
+          <img src="/img/albe_inv.png" alt="Retrato de Alberto M." />
+        </div>
+        <div class="photo-accent" aria-hidden="true"></div>
+      </div>
+
+      <div class="hero-text">
+        <span class="eyebrow">Portafolio profesional</span>
+        <h1 class="display hero-title">
+          {nombre}<span class="dot">.</span>
+        </h1>
+        <p class="hero-sub">
+          Gestión documental · Desarrollo Odoo · Investigación · Docencia
+        </p>
+        <p class="hero-desc">
+          Cuatro especialidades, un mismo criterio: rigor técnico, claridad
+          y soluciones que duran. Explora cada ámbito y descarga el CV
+          específico que necesites.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#micrositios" class="btn btn-primary">Ver especialidades</a>
+          <a href="/contacto" class="btn btn-ghost">Contacto</a>
+        </div>
+
+        <ul class="hero-meta">
+          <li><strong>+10</strong> años de experiencia</li>
+          <li><strong>4</strong> ámbitos de trabajo</li>
+          <li><strong>CV</strong> por especialidad</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MICROSITIOS ================= -->
+  <section id="micrositios" class="micrositios">
+    <div class="container">
+      <header class="section-head">
+        <span class="eyebrow">Especialidades</span>
+        <h2 class="display section-title">
+          Cuatro formas de trabajar<span class="dot">.</span>
+        </h2>
+        <p class="section-sub">
+          Cada especialidad tiene su propio espacio, con proyectos,
+          experiencia y un CV descargable específico.
+        </p>
+      </header>
+
+      <div class="grid">
+        {especialidades.map((e) => (
+          <a href={e.href} class="card">
+            <div class="card-top">
+              <span class="kicker">{e.kicker}</span>
+              <span class="arrow" aria-hidden="true">→</span>
+            </div>
+            <h3 class="card-title display">{e.title}</h3>
+            <p class="card-desc">{e.desc}</p>
+            <div class="card-tags">
+              {e.tags.map((t) => <span>{t}</span>)}
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CTA ================= -->
+  <section class="cta">
+    <div class="container cta-inner">
+      <div>
+        <h3 class="display cta-title">¿Hablamos?</h3>
+        <p class="cta-sub">
+          Abierto a colaboraciones, proyectos y oportunidades que encajen
+          con alguno de estos ámbitos.
+        </p>
+      </div>
+      <a href="/contacto" class="btn btn-accent">Escríbeme →</a>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span>A113E — Portafolio profesional</span>
+      </div>
+      <nav class="footer-nav">
+        <a href="/documental">Documental</a>
+        <a href="/odoo">Odoo</a>
+        <a href="/investigador">Investigación</a>
+        <a href="/profesor">Docencia</a>
+        <a href="/sobre-mi">Sobre mí</a>
+      </nav>
+    </div>
+  </footer>
+</BaseLayout>
+
+<style>
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative;
+    padding: 88px 0 96px;
+    overflow: hidden;
+  }
+  .watermark {
+    position: absolute;
+    top: 20px;
+    right: -40px;
+    font-size: clamp(180px, 28vw, 420px);
+    color: rgba(30, 42, 56, 0.035);
+    pointer-events: none;
+    user-select: none;
+    line-height: 1;
+    z-index: 0;
+  }
+  .hero-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 72px;
+    align-items: center;
+  }
+  .hero-photo {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+  .photo-frame {
+    width: 100%;
+    max-width: 420px;
+    aspect-ratio: 3 / 4;
+    border-radius: 240px 240px 24px 24px;
+    overflow: hidden;
+    background: linear-gradient(180deg, #fff, #efece5);
+    box-shadow: var(--shadow-lg);
+  }
+  .photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+  .photo-accent {
+    position: absolute;
+    inset: auto -24px -24px auto;
+    width: 140px;
+    height: 140px;
+    border: 2px solid var(--accent);
+    border-radius: 50%;
+    z-index: -1;
+  }
+
+  .hero-text { max-width: 560px; }
+  .eyebrow {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+  .hero-title {
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    margin: 0 0 12px;
+    color: var(--surface-dark);
+  }
+  .dot { color: var(--accent); }
+  .hero-sub {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin: 0 0 24px;
+    letter-spacing: 0.02em;
+  }
+  .hero-desc {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    margin: 0 0 36px;
+    max-width: 480px;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 48px;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+    padding: 24px 0 0;
+    margin: 0;
+    border-top: 1px solid var(--border);
+  }
+  .hero-meta li {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .hero-meta strong {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--surface-dark);
+    font-weight: 600;
+  }
+
+  /* ---------- MICROSITIOS ---------- */
+  .micrositios { padding: 40px 0 96px; }
+  .section-head { max-width: 620px; margin-bottom: 56px; }
+  .section-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin: 0 0 12px;
+    color: var(--surface-dark);
+  }
+  .section-sub { color: var(--text-muted); margin: 0; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .card {
+    position: relative;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 36px 32px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s ease;
+  }
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+    border-color: transparent;
+  }
+  .card:hover::before { transform: scaleX(1); }
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .kicker {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+  .arrow {
+    font-size: 1.3rem;
+    color: var(--text-muted);
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+  .card:hover .arrow {
+    transform: translateX(6px);
+    color: var(--surface-dark);
+  }
+  .card-title {
+    font-size: 1.7rem;
+    margin: 0;
+    color: var(--surface-dark);
+  }
+  .card-desc {
+    color: var(--text-muted);
+    margin: 0;
+    font-size: 0.98rem;
+    flex-grow: 1;
+  }
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: 8px;
+  }
+  .card-tags span {
+    font-size: 0.78rem;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--bg);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+
+  /* ---------- CTA ---------- */
+  .cta {
+    background: var(--surface-dark);
+    color: #fff;
+    padding: 72px 0;
+  }
+  .cta-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .cta-title {
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    margin: 0 0 8px;
+    color: #fff;
+  }
+  .cta-sub { margin: 0; color: rgba(255, 255, 255, 0.7); max-width: 520px; }
+
+  /* ---------- FOOTER ---------- */
+  .footer {
+    background: var(--surface-dark-2);
+    color: rgba(255, 255, 255, 0.6);
+    padding: 40px 0;
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.9rem;
+  }
+  .footer-brand img {
+    height: 28px;
+    width: 28px;
+    border-radius: 6px;
+  }
+  .footer-nav {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-size: 0.88rem;
+  }
+  .footer-nav a:hover { color: var(--accent); }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 900px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 48px;
+      text-align: center;
+    }
+    .hero-text { max-width: 100%; margin: 0 auto; }
+    .hero-desc { margin-left: auto; margin-right: auto; }
+    .hero-actions { justify-content: center; }
+    .hero-meta { justify-content: center; gap: 24px; }
+    .photo-frame { max-width: 320px; }
+    .photo-accent { display: none; }
+    .grid { grid-template-columns: 1fr; }
+    .cta-inner { flex-direction: column; align-items: flex-start; }
+  }
+</style>

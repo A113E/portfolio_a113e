@@ -1,0 +1,160 @@
+---
+const links = [
+  { href: '/', label: 'Inicio' },
+  { href: '/#micrositios', label: 'Especialidades' },
+  { href: '/sobre-mi', label: 'Sobre mí' },
+  { href: '/contacto', label: 'Contacto' },
+];
+
+const pathname = Astro.url.pathname;
+---
+
+<header class="nav-wrap">
+  <nav class="container nav">
+    <a href="/" class="brand" aria-label="Inicio">
+      <span class="brand-text">A113E</span>
+    </a>
+
+    <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <ul class="nav-links">
+      {links.map((l) => (
+        <li>
+          <a href={l.href} class={pathname === l.href ? 'active' : ''}>
+            {l.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
+
+<script>
+  import '../scripts/nav.js';
+</script>
+
+<style>
+  .nav-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(248, 247, 245, 0.85);
+    backdrop-filter: saturate(140%) blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .brand-logo {
+    height: 36px;
+    width: 36px;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+  }
+
+  .brand-text {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.15rem;
+    letter-spacing: 0.04em;
+    color: var(--surface-dark);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: var(--space-5);
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    position: relative;
+    padding: 6px 0;
+    transition: color var(--transition-fast);
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active {
+    color: var(--surface-dark);
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent);
+    transition: width 0.25s var(--ease);
+  }
+
+  .nav-links a:hover::after,
+  .nav-links a.active::after {
+    width: 100%;
+  }
+
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: 0;
+    padding: var(--space-2);
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .nav-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--surface-dark);
+    transition: transform var(--transition-fast);
+  }
+
+  @media (max-width: 720px) {
+    .nav-toggle { display: flex; }
+
+    .nav-links {
+      position: absolute;
+      top: 72px;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      gap: 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: var(--space-2) var(--space-4) var(--space-4);
+      transform: translateY(-8px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .nav-links.open {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .nav-links a {
+      display: block;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+  }
+</style>
