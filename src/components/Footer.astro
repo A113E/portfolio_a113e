@@ -1,0 +1,52 @@
+---
+const links = [
+  { href: '/documental', label: 'Documental' },
+  { href: '/odoo', label: 'Odoo' },
+  { href: '/investigador', label: 'Investigación' },
+  { href: '/profesor', label: 'Docencia' },
+  { href: '/sobre-mi', label: 'Sobre mí' },
+];
+---
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <span>A113E — Portafolio profesional</span>
+    </div>
+    <nav class="footer-nav">
+      {links.map((l) => (
+        <a href={l.href}>{l.label}</a>
+      ))}
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--surface-dark-2);
+    color: var(--text-inverse-muted);
+    padding: var(--space-6) 0;
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+  .footer-brand {
+    font-size: 0.9rem;
+  }
+  .footer-nav {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    font-size: 0.88rem;
+  }
+  .footer-nav a {
+    transition: color var(--transition-fast);
+  }
+  .footer-nav a:hover {
+    color: var(--accent);
+  }
+</style>

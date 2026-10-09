@@ -1,0 +1,1083 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+
+const perfil = {
+  nombre: 'Alberto Adrián Mártir González',
+  titular: 'Licenciado en Sistemas de Información · Desarrollador Odoo · Investigador · Docente',
+  resumen:
+    'Profesional de las Ciencias de la Información con más de 4 años de experiencia en entornos académicos, empresariales y científicos. Combino el desarrollo de software (Odoo, Laravel, Full Stack), la gestión documental, la investigación y la docencia universitaria con un mismo criterio: rigor técnico, claridad y soluciones que duran.',
+  cv: '/cv/alberto-martir.pdf',
+};
+
+const timeline = [
+  {
+    tipo: 'experiencia',
+    fecha: 'dic 2025 — actualidad',
+    titulo: 'Desarrollador Odoo / Laravel',
+    institucion: 'Desoft, Empresa de Desarrollo de Aplicaciones Informáticas',
+    lugar: 'Vedado. La Habana, Cuba',
+    descripcion:
+      'Desarrollo, corrección y mejora de módulos personalizados sobre Odoo en proyectos institucionales. Participación en ICS (Instituto de Comunicación Social) con los módulos df_website_process, df_invoice_process y l10n_cu_payment_transfermovil para Odoo 16. Soporte y administración de eventos en Fevexpo (MINTUR, MINCOM, AgroCiencias) con módulos df_scientific_program, df_user_profile, df_user_register, df_virtual_fair, df_website_event, df_base y df_prize_selection en Odoo 14. Actualmente en el desarrollo y soporte de arquitectura de Fevexpo para Odoo 19, con análisis de requisitos, implementación de módulos OCA y módulos propios (df_event_mode, df_user_role, df_virtual_stands).',
+    skills: ['Odoo 14/16/19', 'OCA', 'Laravel', 'PostgreSQL', 'Python', 'Doodba', 'Gitlab/Github', 'Docker', 'Linux', 'Arquitectura', 'Análisis de requisitos'],
+  },
+  {
+    tipo: 'experiencia',
+    fecha: 'oct 2021 — nov 2025',
+    titulo: 'Especialista en Gestión de la Información · Profesor Ayudante',
+    institucion: 'Universidad de Ciencias Médicas "Salvador Allende"',
+    lugar: 'Cerro. La Habana, Cuba',
+    descripcion:
+      'Creación de aplicaciones web BiblioAllende y BiblioAsesor para gestión y consulta del patrimonio documental. Desarrollo y administración del sitio del evento científico GERAT Habana 2021 y CONFACSA 2025 (también ponente en ambos eventos). Automatización estadística (método Delphi, cálculo de remuneraciones) con Excel + VBA. Docencia en Indización, Estadística, Demografía, Diseño y Gestión de Bases de Datos, Diseño Web y Alfabetización Informacional. Dirección del canal educativo PieDiabéticoEducaciónOnline y redacción SEO para FitCasaPro. Apoyo y asesoría en tesis de pregrado y posgrado, publicaciones científicas y proyectos investigativos a profesores, doctores y residentes. Participación en eventos y jornadas científicas y académicas de la institución',
+    skills: ['Gestión documental', 'MySQL Server', 'PHP', 'JavaScript', 'Excel/VBA', 'Docencia', 'SEO', 'Access', 'HTML', 'Wordpress', 'CSS', 'Bibliografías', 'Zotero', 'Información Científica', 'Indización', 'Metodología de la investigación'],
+  },
+  {
+    tipo: 'experiencia',
+    fecha: 'ene 2021 — jul 2021',
+    titulo: 'Gestor de copias audiovisuales · Impresión y escaneo',
+    institucion: 'Dayron Audiovisuales',
+    lugar: 'Cerro. La Habana, Cuba',
+    descripcion:
+      'Gestión de contenido audiovisual: paquetes semanales, series, documentales, novelas y películas. Impresión y escaneo de documentos. Atención al cliente, recomendaciones y sugerencias audiovisuales personalizadas.',
+    skills: ['Atención al cliente', 'Gestión audiovisual', 'Digitalización', 'Impresión', 'Organización', 'Empatía', 'Sistemas Operativos', 'Aplicaciones Informáticas'],
+  },
+  {
+    tipo: 'experiencia',
+    fecha: 'ene 2018 — dic 2020',
+    titulo: 'Consultor TIC · Desarrollador',
+    institucion: 'DISAIC, Empresa Consultora de Servicios Informáticos',
+    lugar: 'Cerro. La Habana, Cuba',
+    descripcion:
+      'Diseño y desarrollo de sitios institucionales (DISAIC, MAQUIMOTOR). Gestión de bases de datos y consultorías tecnológicas. Impartición de cursos de WordPress y Joomla. Trabajo con el sistema contable Versat. Procesamiento digital de documentos regulados por la empresa.',
+    skills: ['WordPress', 'Joomla', 'PHP', 'HTML', 'CSS', 'MySQL', 'XAMPP', 'WAMP', 'MariaDB', 'SQL Server', 'Gestión Documental'],
+  },
+  {
+    tipo: 'formacion',
+    fecha: 'dic 2025 — feb 2026',
+    titulo: 'Curso Básico — Desarrollo Odoo',
+    institucion: 'DESOFT',
+    lugar: 'Vedado. La Habana, Cuba',
+    descripcion:
+      'Curso introductorio de Odoo. Instalación, entorno, módulos base, creación del primer módulo.',
+    skills: ['Odoo', 'ORM', 'XML', 'Python', 'JavaScript', 'CSS', 'PostgreSQL'],
+  },
+  {
+    tipo: 'formacion',
+    fecha: 'may 2022 — ago 2025',
+    titulo: 'FullStack Open',
+    institucion: 'Universidad de Helsinki (Online)',
+    lugar: 'Finlandia',
+    descripcion:
+      'Programa internacional de desarrollo Full Stack. Certificado de terminación y créditos universitarios. Enfoque en aplicaciones modernas con React, Node.js, Express, MongoDB y testing.',
+    skills: ['React', 'Node.js', 'Express', 'MongoDB', 'Testing'],
+  },
+  {
+    tipo: 'formacion',
+    fecha: 'sep 2021 — jul 2025',
+    titulo: 'Licenciatura en Sistemas de Información',
+    institucion: 'FCM "Salvador Allende"',
+    lugar: 'Cerro. La Habana, Cuba',
+    descripcion:
+      'Graduado con Título de Oro. Premio "Mario Muñoz" y reconocimiento como Estudiante Más Integral de la Universidad. Invitado especial a cuatro pruebas estatales. Profesor ayudante durante la carrera.',
+    skills: ['Sistemas de Información', 'Investigación', 'Docencia'],
+  },
+  {
+    tipo: 'formacion',
+    fecha: 'sep 2014 — jul 2018',
+    titulo: 'Técnico en Ciencias Informáticas',
+    institucion: 'Politécnico "FAYR"',
+    lugar: 'Cerro. La Habana, Cuba',
+    descripcion:
+      'Graduado con excelentes notas y formación académica valorada por el rector del centro. Fundamentos de sistemas, pensamiento lógico y resolución de problemas.',
+    skills: ['Informática', 'Lógica', 'Sistemas'],
+  },
+];
+
+const logros = [
+  {
+    year: '2025',
+    titulo: 'Título de Oro',
+    detalle: 'Graduación con honores de la Licenciatura en Sistemas de Información.',
+  },
+  {
+    year: '2025',
+    titulo: 'Premio "Mario Muñoz"',
+    detalle: 'Estudiantes con resultados sobresalientes, alto compromiso social y aportes científicos.',
+  },
+  {
+    year: '2025',
+    titulo: 'Estudiante Más Integral',
+    detalle: 'Reconocimiento de la Universidad "Salvador Allende".',
+  },
+  {
+    year: '2024',
+    titulo: 'Certificado Full Stack',
+    detalle: 'Universidad de Helsinki, programa FullStack Open.',
+  },
+  {
+    year: '2022-2023',
+    titulo: 'Trabajador Destacado',
+    detalle: 'Dos años consecutivos en la Universidad "Salvador Allende".',
+  },
+];
+
+const eventos = [
+  {
+    year: '2021',
+    nombre: 'GERAT Habana 2021',
+    contexto: 'Evento científico nacional e internacional · Ponente',
+  },
+  {
+    year: '2022',
+    nombre: 'Simposio Científico Internacional en Ciencias de la Salud "El Salvador"',
+    contexto: 'Participación científica internacional',
+  },
+  {
+    year: '2022',
+    nombre: 'Festival de Clases "Salvador Allende"',
+    contexto: 'Edición 2022',
+  },
+  {
+    year: '2023',
+    nombre: 'Festival de Clases "Salvador Allende"',
+    contexto: 'Edición 2023',
+  },
+  {
+    year: '2024',
+    nombre: 'Festival de Clases "Salvador Allende"',
+    contexto: 'Edición 2024',
+  },
+  {
+    year: '2025',
+    nombre: 'Festival de Clases "Salvador Allende"',
+    contexto: 'Edición 2025',
+  },
+  {
+    year: '2023',
+    nombre: 'Séptimo Congreso Internacional de Cuerpos Académicos de Enfermería',
+    contexto: 'Universidad Autónoma de México',
+  },
+  {
+    year: '2023-2025',
+    nombre: 'CONFACSA',
+    contexto: 'Conferencia científica · Ediciones 2023 a 2025',
+  },
+  {
+    year: '2022',
+    nombre: 'HISTARMED',
+    contexto: 'Edición 2022',
+  },
+  {
+    year: '2024',
+    nombre: 'HISTARMED',
+    contexto: 'Edición 2024',
+  },
+  {
+    year: '2024',
+    nombre: 'Jornada de Inglés "Salvador Allende"',
+    contexto: 'Edición 2024',
+  },
+];
+
+const proyectos = [
+  {
+    nombre: 'Medios Diagnósticos para la COVID-19',
+    institucion: 'Universidad "Salvador Allende"',
+    periodo: '2022 — 2026',
+    estado: 'Activo',
+    descripcion:
+      'Proyecto de innovación centrado en el estudio y la organización de los medios diagnósticos empleados durante la pandemia de COVID-19, con impacto en la docencia y la investigación en ciencias de la salud.',
+    tags: ['Investigación', 'Salud', 'Análisis de datos'],
+  },
+  {
+    nombre: 'Estrategia educativa a cuidadores de ancianos dependientes con pie diabético',
+    institucion: 'CITED',
+    periodo: '2022 — 2026',
+    estado: 'Activo',
+    descripcion:
+      'Diseño e implementación de una estrategia educativa dirigida a cuidadores de adultos mayores dependientes con pie diabético, orientada a mejorar la atención y reducir complicaciones.',
+    tags: ['Educación para la salud', 'Pie diabético', 'Cuidadores'],
+  },
+  {
+    nombre: 'Estrategia educativa podológica para cuidadores de ancianos dependientes con pie diabético',
+    institucion: 'CITED',
+    periodo: '2022 — 2027',
+    estado: 'Activo',
+    descripcion:
+      'Continuación y ampliación del proyecto anterior con enfoque podológico, extendiendo la formación y seguimiento de cuidadores hasta 2027.',
+    tags: ['Podología', 'Pie diabético', 'Educación'],
+  },
+  {
+    nombre: 'Plataforma para la Gestión de Eventos y Ferias Expositivas — FEVEXPO',
+    institucion: 'Desoft',
+    periodo: '2025 — 2027',
+    estado: 'Activo',
+    descripcion:
+      'Proyecto de desarrollo de una plataforma integral para la gestión de eventos y ferias expositivas, incluyendo soporte para eventos del MINTUR, MINCOM y AgroCiencias. Incluye análisis de requisitos, arquitectura y desarrollo de módulos personalizados y OCA sobre Odoo.',
+    tags: ['Odoo', 'Arquitectura', 'Eventos', 'OCA'],
+  },
+];
+
+const docencia = {
+  impartidos: [
+    'Arquitectura de Máquinas',
+    'Estadística Inferencial',
+    'Programación',
+    'Indización',
+    'Diseño y Gestión de Bases de Datos',
+    'Investigación Científica',
+    'Metodología de la Investigación',
+    'Diseño Web',
+    'Matemáticas',
+    'Demografía',
+    'Alfabetización Informacional',
+    'Posgrado Búsqueda Bibliográfica',
+  ],
+  recibidos: [
+    'Zotero',
+    'DeCS',
+    'MeSH',
+    'BVS',
+    'Google Académico',
+    'Inteligencia Artificial',
+    'WordPress',
+    'Joomla',
+    'HTML',
+    'CSS',
+    'PHP',
+    'Odoo',
+  ],
+};
+
+const habilidades = {
+  soft: [
+    { nombre: 'Comunicación efectiva', detalle: 'Traduzco información compleja en mensajes claros para públicos técnicos y no técnicos.' },
+    { nombre: 'Trabajo en equipo', detalle: 'Colaboración con equipos multidisciplinarios en entornos académicos y empresariales.' },
+    { nombre: 'Disciplina y constancia', detalle: 'Cumplimiento de plazos y estándares de calidad en proyectos prolongados.' },
+    { nombre: 'Adaptabilidad', detalle: 'Transición fluida entre contextos técnicos, docentes e investigativos.' },
+    { nombre: 'Pensamiento analítico', detalle: 'Descomposición de problemas complejos en soluciones implementables.' },
+    { nombre: 'Creatividad aplicada', detalle: 'Diseño de soluciones digitales y pedagógicas innovadoras.' },
+    { nombre: 'Empatía y mentoría', detalle: 'Acompañamiento y formación de estudiantes, tesistas y colegas.' },
+    { nombre: 'Aprendizaje continuo', detalle: 'Actualización constante en tecnologías, metodologías y herramientas.' },
+  ],
+  tecnicas: [
+    { area: 'Desarrollo', items: ['Python', 'JavaScript', 'PHP', 'React', 'Node.js', 'Express', 'Laravel'] },
+    { area: 'Odoo', items: ['Odoo 14/16/19', 'ORM', 'XML', 'OCA', 'Doodba', 'Módulos personalizados'] },
+    { area: 'Frontend', items: ['HTML', 'CSS', 'Bootstrap', 'React', 'Angular'] },
+    { area: 'Bases de datos', items: ['PostgreSQL', 'MySQL', 'SQL Server', 'MariaDB', 'MongoDB'] },
+    { area: 'CMS y web', items: ['WordPress', 'Joomla', 'Drupal', 'TYPO3'] },
+    { area: 'DevOps y entorno', items: ['Docker', 'Git', 'GitHub', 'GitLab', 'Linux'] },
+    { area: 'Gestión documental', items: ['Metadatos', 'Indización', 'Zotero', 'BVS', 'DeCS', 'MeSH'] },
+    { area: 'Investigación y docencia', items: ['Metodología de la investigación', 'SEO', 'Excel + VBA', 'Moodle'] },
+  ],
+};
+
+const idiomas = [
+  { nombre: 'Español', nivel: 'Nativo', valor: 100, etiqueta: 'C2' },
+  { nombre: 'Inglés', nivel: 'Intermedio', valor: 60, etiqueta: 'B2' },
+];
+---
+
+<BaseLayout
+  title="Sobre mí — Alberto Adrián Mártir González"
+  description="Trayectoria profesional, formación, logros, eventos científicos y proyectos de innovación de Alberto Adrián Mártir González."
+>
+  <Nav />
+
+  <!-- ============ HERO SOBRE MÍ ============ -->
+  <section class="about-hero">
+    <div class="container about-hero-inner">
+      <span class="eyebrow">Sobre mí</span>
+      <h1 class="display about-title">
+        Trayectoria<span class="dot">.</span>
+      </h1>
+      <p class="about-titular">{perfil.titular}</p>
+      <p class="about-resumen">{perfil.resumen}</p>
+      <div class="about-actions">
+        <a href={perfil.cv} class="btn btn-primary" download>
+          Descargar CV completo
+          <span aria-hidden="true">↓</span>
+        </a>
+        <a href="/contacto" class="btn btn-ghost">Contacto</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TIMELINE ============ -->
+  <section class="timeline-section">
+    <div class="container">
+      <header class="timeline-head">
+        <h2 class="display timeline-title">
+          Línea de tiempo<span class="dot">.</span>
+        </h2>
+        <p class="timeline-sub">
+          Formación y experiencia en orden cronológico.
+        </p>
+      </header>
+
+      <div class="filters" role="tablist" aria-label="Filtrar línea de tiempo">
+        <button class="filter active" data-filter="todo" role="tab" aria-selected="true">Todo</button>
+        <button class="filter" data-filter="experiencia" role="tab" aria-selected="false">Experiencia</button>
+        <button class="filter" data-filter="formacion" role="tab" aria-selected="false">Formación</button>
+      </div>
+
+      <ol class="timeline" id="timeline">
+        {timeline.map((item) => (
+          <li class="tl-item" data-tipo={item.tipo}>
+            <div class="tl-marker">
+              <span class="tl-dot"></span>
+            </div>
+            <article class="tl-card">
+              <header class="tl-card-head">
+                <span class={`tl-badge tl-badge-${item.tipo}`}>
+                  {item.tipo === 'experiencia' ? 'Experiencia' : 'Formación'}
+                </span>
+                <span class="tl-fecha">{item.fecha}</span>
+              </header>
+              <h3 class="tl-role display">{item.titulo}</h3>
+              <p class="tl-inst">
+                <strong>{item.institucion}</strong>
+                <span class="tl-lugar"> · {item.lugar}</span>
+              </p>
+              <p class="tl-desc">{item.descripcion}</p>
+              <ul class="tl-skills">
+                {item.skills.map((s) => <li>{s}</li>)}
+              </ul>
+            </article>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ LOGROS ============ -->
+  <section class="logros-section">
+    <div class="container">
+      <header class="timeline-head">
+        <h2 class="display timeline-title">
+          Logros destacados<span class="dot">.</span>
+        </h2>
+        <p class="timeline-sub">
+          Reconocimientos académicos y profesionales.
+        </p>
+      </header>
+      <div class="logros-grid">
+        {logros.map((l) => (
+          <article class="logro-card">
+            <span class="logro-year">{l.year}</span>
+            <h3 class="logro-title display">{l.titulo}</h3>
+            <p class="logro-detail">{l.detalle}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EVENTOS CIENTÍFICOS ============ -->
+  <section class="eventos-section">
+    <div class="container">
+      <header class="timeline-head">
+        <h2 class="display timeline-title">
+          Eventos y jornadas científicas<span class="dot">.</span>
+        </h2>
+        <p class="timeline-sub">
+          Congresos, simposios y jornadas en los que he participado como ponente o asistente.
+        </p>
+      </header>
+      <ul class="eventos-grid">
+        {eventos.map((e) => (
+          <li class="evento-card">
+            <span class="evento-year">{e.year}</span>
+            <h3 class="evento-nombre">{e.nombre}</h3>
+            <p class="evento-contexto">{e.contexto}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ PROYECTOS I+D ============ -->
+  <section class="proyectos-section">
+    <div class="container">
+      <header class="timeline-head">
+        <h2 class="display timeline-title">
+          Proyectos de innovación y desarrollo<span class="dot">.</span>
+        </h2>
+        <p class="timeline-sub">
+          Proyectos activos y recientes en los que participo o he participado.
+        </p>
+      </header>
+      <div class="proyectos-grid">
+        {proyectos.map((p) => (
+          <article class="proyecto-card">
+            <header class="proyecto-head">
+              <span class="proyecto-estado">{p.estado}</span>
+              <span class="proyecto-periodo">{p.periodo}</span>
+            </header>
+            <h3 class="proyecto-nombre display">{p.nombre}</h3>
+            <p class="proyecto-inst">{p.institucion}</p>
+            <p class="proyecto-desc">{p.descripcion}</p>
+            <ul class="proyecto-tags">
+              {p.tags.map((t) => <li>{t}</li>)}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DOCENCIA ============ -->
+  <section class="docencia-section">
+    <div class="container">
+      <header class="timeline-head">
+        <h2 class="display timeline-title">
+          Docencia y formación continua<span class="dot">.</span>
+        </h2>
+      </header>
+      <div class="docencia-grid">
+        <div class="docencia-col">
+          <h3 class="docencia-sub">Asignaturas impartidas</h3>
+          <ul class="docencia-list">
+            {docencia.impartidos.map((d) => <li>{d}</li>)}
+          </ul>
+        </div>
+        <div class="docencia-col">
+          <h3 class="docencia-sub">Cursos y herramientas recibidas</h3>
+          <ul class="docencia-list">
+            {docencia.recibidos.map((d) => <li>{d}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+    <!-- ============ HABILIDADES ============ -->
+  <section class="habilidades-section">
+    <div class="container">
+      <header class="timeline-head">
+        <h2 class="display timeline-title">
+          Competencias y habilidades<span class="dot">.</span>
+        </h2>
+        <p class="timeline-sub">
+          Lo que aporto más allá del conocimiento técnico.
+        </p>
+      </header>
+
+      <div class="habilidades-grid">
+        <div class="hab-col">
+          <h3 class="hab-col-title">Soft skills</h3>
+          <ul class="soft-list">
+            {habilidades.soft.map((s) => (
+              <li class="soft-item">
+                <span class="soft-marker" aria-hidden="true"></span>
+                <div>
+                  <strong>{s.nombre}</strong>
+                  <p>{s.detalle}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="hab-col">
+          <h3 class="hab-col-title">Competencias técnicas</h3>
+          <div class="tecnicas-list">
+            {habilidades.tecnicas.map((t) => (
+              <div class="tecnica-grupo">
+                <span class="tecnica-area">{t.area}</span>
+                <ul class="tecnica-items">
+                  {t.items.map((i) => <li>{i}</li>)}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Idiomas -->
+      <div class="idiomas-block">
+        <h3 class="hab-col-title">Idiomas</h3>
+        <ul class="idiomas-list">
+          {idiomas.map((i) => (
+            <li class="idioma-item">
+              <div class="idioma-head">
+                <span class="idioma-nombre">{i.nombre}</span>
+                <span class="idioma-nivel">{i.nivel} · {i.etiqueta}</span>
+              </div>
+              <div class="idioma-bar" role="img" aria-label={`${i.nombre}: ${i.nivel}`}>
+                <span class="idioma-fill" style={`width: ${i.valor}%`}></span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import '../scripts/timeline-filter.js';
+</script>
+
+<style>
+  /* ---------- HERO SOBRE MÍ ---------- */
+  .about-hero {
+    padding: var(--space-8) 0 var(--space-6);
+  }
+  .about-hero-inner { max-width: 820px; }
+  .about-title {
+    font-size: clamp(3rem, 7vw, 5rem);
+    margin: var(--space-3) 0 var(--space-4);
+    color: var(--surface-dark);
+  }
+  .about-titular {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--accent);
+    margin: 0 0 var(--space-4);
+    letter-spacing: 0.01em;
+  }
+  .about-resumen {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    max-width: 720px;
+    margin: 0 0 var(--space-5);
+  }
+  .about-actions {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+
+  /* ---------- TIMELINE ---------- */
+  .timeline-section {
+    padding: var(--space-7) 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(229, 226, 220, 0.35) 50%, transparent 100%);
+  }
+  .timeline-head { max-width: 620px; margin-bottom: var(--space-5); }
+  .timeline-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin: 0 0 var(--space-2);
+    color: var(--surface-dark);
+  }
+  .timeline-sub { color: var(--text-muted); margin: 0; }
+
+  .filters {
+    display: flex;
+    gap: var(--space-2);
+    margin-bottom: var(--space-6);
+    flex-wrap: wrap;
+  }
+  .filter {
+    padding: 8px 18px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--border);
+    background: var(--bg-elevated);
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: all var(--transition-fast);
+  }
+  .filter:hover { border-color: var(--surface-dark); color: var(--surface-dark); }
+  .filter.active {
+    background: var(--surface-dark);
+    color: var(--text-inverse);
+    border-color: var(--surface-dark);
+  }
+
+  .timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--accent), var(--border) 40%, var(--border));
+    opacity: 0.5;
+  }
+
+  .tl-item {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+    position: relative;
+    transition: opacity 0.35s var(--ease);
+  }
+
+  .tl-item[data-dimmed='true'] {
+    opacity: 0.22;
+    filter: grayscale(0.7);
+  }
+
+  .tl-marker {
+    display: flex;
+    justify-content: center;
+    padding-top: 24px;
+  }
+  .tl-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--accent);
+    box-shadow: 0 0 0 4px var(--bg);
+    transition: transform var(--transition-base);
+  }
+  .tl-item:hover .tl-dot {
+    transform: scale(1.4);
+    background: var(--accent);
+  }
+
+  .tl-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-4) var(--space-5);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+  }
+  .tl-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+  }
+  .tl-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-2);
+    flex-wrap: wrap;
+  }
+  .tl-badge {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+  }
+  .tl-badge-experiencia {
+    background: rgba(201, 162, 39, 0.15);
+    color: #8a6f12;
+  }
+  .tl-badge-formacion {
+    background: rgba(30, 42, 56, 0.08);
+    color: var(--surface-dark);
+  }
+  .tl-fecha {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .tl-role {
+    font-size: 1.4rem;
+    margin: 0 0 var(--space-1);
+    color: var(--surface-dark);
+  }
+  .tl-inst {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin: 0 0 var(--space-3);
+  }
+  .tl-lugar { opacity: 0.75; }
+  .tl-desc {
+    font-size: 0.96rem;
+    color: var(--text-muted);
+    margin: 0 0 var(--space-3);
+  }
+  .tl-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .tl-skills li {
+    font-size: 0.76rem;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    background: var(--bg);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+
+  /* ---------- LOGROS ---------- */
+  .logros-section { padding: var(--space-7) 0; }
+  .logros-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+  }
+  .logro-card {
+    background: var(--surface-dark);
+    color: var(--text-inverse);
+    border-radius: var(--radius);
+    padding: var(--space-5) var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    position: relative;
+    overflow: hidden;
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+  }
+  .logro-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent);
+  }
+  .logro-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+  .logro-year {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+  .logro-title {
+    font-size: 1.25rem;
+    margin: 0;
+    color: var(--text-inverse);
+  }
+  .logro-detail {
+    font-size: 0.9rem;
+    color: var(--text-inverse-muted);
+    margin: 0;
+  }
+
+  /* ---------- EVENTOS ---------- */
+  .eventos-section {
+    padding: var(--space-7) 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(229, 226, 220, 0.35) 50%, transparent 100%);
+  }
+  .eventos-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+  }
+  .evento-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: var(--space-4) var(--space-5);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+  }
+  .evento-card:hover {
+    transform: translateX(4px);
+    box-shadow: var(--shadow-md);
+  }
+  .evento-year {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+  }
+  .evento-nombre {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--surface-dark);
+    line-height: 1.3;
+  }
+  .evento-contexto {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  /* ---------- PROYECTOS ---------- */
+  .proyectos-section { padding: var(--space-7) 0; }
+  .proyectos-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+  .proyecto-card {
+    position: relative;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-5) var(--space-5) var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    overflow: hidden;
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+  }
+  .proyecto-card::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease);
+  }
+  .proyecto-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+  }
+  .proyecto-card:hover::before { transform: scaleX(1); }
+  .proyecto-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .proyecto-estado {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: var(--radius-pill);
+    background: rgba(201, 162, 39, 0.15);
+    color: #8a6f12;
+  }
+  .proyecto-periodo {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .proyecto-nombre {
+    font-size: 1.25rem;
+    margin: var(--space-1) 0 0;
+    color: var(--surface-dark);
+    line-height: 1.25;
+  }
+  .proyecto-inst {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin: 0;
+    font-weight: 500;
+  }
+  .proyecto-desc {
+    font-size: 0.94rem;
+    color: var(--text-muted);
+    margin: var(--space-2) 0 var(--space-3);
+    flex-grow: 1;
+  }
+  .proyecto-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .proyecto-tags li {
+    font-size: 0.76rem;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    background: var(--bg);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+
+  /* ---------- DOCENCIA ---------- */
+  .docencia-section {
+    padding: var(--space-7) 0 var(--space-8);
+    background: linear-gradient(180deg, transparent 0%, rgba(229, 226, 220, 0.35) 50%, transparent 100%);
+  }
+  .docencia-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5);
+  }
+  .docencia-sub {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    margin: 0 0 var(--space-3);
+    color: var(--surface-dark);
+    padding-bottom: var(--space-2);
+    border-bottom: 2px solid var(--accent);
+    display: inline-block;
+  }
+  .docencia-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .docencia-list li {
+    font-size: 0.85rem;
+    padding: 6px 14px;
+    border-radius: var(--radius-pill);
+    background: var(--bg-elevated);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+
+    /* ---------- HABILIDADES E IDIOMAS ---------- */
+  .habilidades-section {
+    padding: var(--space-7) 0 var(--space-8);
+  }
+  .habilidades-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: var(--space-6);
+    margin-bottom: var(--space-7);
+  }
+  .hab-col-title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    margin: 0 0 var(--space-4);
+    color: var(--surface-dark);
+    padding-bottom: var(--space-2);
+    border-bottom: 2px solid var(--accent);
+    display: inline-block;
+  }
+
+  /* Soft skills */
+  .soft-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .soft-item {
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
+  }
+  .soft-marker {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-top: 10px;
+    flex-shrink: 0;
+  }
+  .soft-item strong {
+    display: block;
+    font-size: 0.98rem;
+    color: var(--surface-dark);
+    margin-bottom: 2px;
+  }
+  .soft-item p {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* Competencias técnicas */
+  .tecnicas-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .tecnica-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .tecnica-area {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .tecnica-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .tecnica-items li {
+    font-size: 0.8rem;
+    padding: 4px 11px;
+    border-radius: var(--radius-pill);
+    background: var(--bg-elevated);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+
+  /* Idiomas */
+  .idiomas-block {
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--border);
+    max-width: 560px;
+  }
+  .idiomas-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .idioma-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+  .idioma-nombre {
+    font-weight: 600;
+    color: var(--surface-dark);
+    font-size: 0.98rem;
+  }
+  .idioma-nivel {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+  .idioma-bar {
+    width: 100%;
+    height: 6px;
+    background: var(--border);
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+  }
+  .idioma-fill {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-soft));
+    border-radius: var(--radius-pill);
+    transition: width 0.6s var(--ease);
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 900px) {
+    .logros-grid { grid-template-columns: 1fr; }
+    .docencia-grid { grid-template-columns: 1fr; }
+    .eventos-grid { grid-template-columns: 1fr; }
+    .proyectos-grid { grid-template-columns: 1fr; }
+    .habilidades-grid { grid-template-columns: 1fr; gap: var(--space-5); }
+  }
+  @media (max-width: 640px) {
+    .tl-item { grid-template-columns: 24px 1fr; gap: var(--space-3); }
+    .timeline::before { left: 11px; }
+    .tl-dot { width: 12px; height: 12px; }
+    .tl-card { padding: var(--space-4); }
+    .about-actions .btn { width: 100%; justify-content: center; }
+  }
+</style>

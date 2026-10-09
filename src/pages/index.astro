@@ -8,7 +8,7 @@ const especialidades = [
     kicker: '01',
     title: 'Gestión Documental',
     desc: 'Diseño e implantación de repositorios digitales, metadatos, políticas de archivo y preservación.',
-    tags: ['Contenido', 'Audiovisual', 'Metadatos', 'Archivo', 'Preservación','Organización'],
+    tags: ['Contenido', 'Audiovisual', 'Metadatos', 'Archivo', 'Preservación','Organización', 'Automatización con IA'],
   },
   {
     href: '/odoo',
@@ -22,7 +22,7 @@ const especialidades = [
     kicker: '03',
     title: 'Investigación',
     desc: 'Publicaciones, proyectos I+D y líneas de trabajo en torno a la información y la tecnología.',
-    tags: ['Publicaciones', 'I+D', 'Datos', 'Proyectos', 'Tesis', 'Blogs', 'Bibliografías', 'Zotero'],
+    tags: ['Publicaciones', 'I+D', 'Datos', 'Proyectos', 'Tesis', 'Blogs', 'Bibliografías', 'Zotero', 'Pensamiento Crítico'],
   },
   {
     href: '/profesor',
@@ -125,22 +125,6 @@ const nombre = 'Alberto Adrián Mártir González';
       <a href="/contacto" class="btn btn-accent">Escríbeme →</a>
     </div>
   </section>
-
-  <!-- ================= FOOTER ================= -->
-  <footer class="footer">
-    <div class="container footer-inner">
-      <div class="footer-brand">
-        <span>A113E — Portafolio profesional</span>
-      </div>
-      <nav class="footer-nav">
-        <a href="/documental">Documental</a>
-        <a href="/odoo">Odoo</a>
-        <a href="/investigador">Investigación</a>
-        <a href="/profesor">Docencia</a>
-        <a href="/sobre-mi">Sobre mí</a>
-      </nav>
-    </div>
-  </footer>
 </BaseLayout>
 
 <style>
@@ -366,38 +350,6 @@ const nombre = 'Alberto Adrián Mártir González';
     color: #fff;
   }
   .cta-sub { margin: 0; color: rgba(255, 255, 255, 0.7); max-width: 520px; }
-
-  /* ---------- FOOTER ---------- */
-  .footer {
-    background: var(--surface-dark-2);
-    color: rgba(255, 255, 255, 0.6);
-    padding: 40px 0;
-  }
-  .footer-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 24px;
-    flex-wrap: wrap;
-  }
-  .footer-brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 0.9rem;
-  }
-  .footer-brand img {
-    height: 28px;
-    width: 28px;
-    border-radius: 6px;
-  }
-  .footer-nav {
-    display: flex;
-    gap: 24px;
-    flex-wrap: wrap;
-    font-size: 0.88rem;
-  }
-  .footer-nav a:hover { color: var(--accent); }
 
   /* ---------- RESPONSIVE ---------- */
   @media (max-width: 900px) {
